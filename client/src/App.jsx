@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useMatch } from 'react-router-dom'
 import Home from "./pages/student/Home"
 import CoursesList from './pages/student/CoursesList.jsx'
 import CourseDetails from './pages/student/CourseDetails';
@@ -11,10 +11,19 @@ import DashBoard from './pages/educator/DashBoard';
 import AddCourse from './pages/educator/AddCourse'
 import MyCourses from './pages/educator/MyCourses'
 import StudentEnrolled from './pages/educator/StudentsEntrolled'
-
+import Navbar from './components/student/Navbar';
+import Hero from './components/student/Hero';
 export default function App() {
+  const  isEducatorRoute=useMatch('/educator/*');
+
   return (
-    <div>
+    
+  <div className="bg-gradient-to-b from-cyan-100/70 via-cyan-100 to-white">
+
+      {
+        !isEducatorRoute && <Navbar/>
+      }
+
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/course-list' element={<CoursesList/>}/>
