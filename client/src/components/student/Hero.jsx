@@ -3,10 +3,9 @@ import { Typewriter } from "react-simple-typewriter";
 
 export default function Hero() {
   return (
-    <div>
-      <div>
-        <h1 className="font-bold text-4xl ">
-          Learn Skills and Build a Successful <br/> Career
+      <div className=" md:max-w-2xl max-w-md mx-auto px-8 items-center">
+        <h1 className="font-bold md:text-4xl text-2xl">
+          Learn Skills and Build a Successful <br/>Career
           with{" "}
           <span className="text-blue-600 font-bold ">
             <Typewriter
@@ -25,13 +24,10 @@ export default function Hero() {
               delaySpeed={1800}
             />
           </span>
-        </h1>  <p className="mt-4 text-gray-700 text-base text-center max-w-xl  ">
+        </h1>  <p className="mt-4 text-gray-700 text-sm md:text-base text-center max-w-xl  ">
   Learn new skills, grow with confidence, and take the next step in your journey — all at your own pace with 
   skills that will help you .
 </p>
       </div>
-   
-
-    </div>
   );
 }

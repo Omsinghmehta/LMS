@@ -9,8 +9,8 @@ export default function Navbar() {
   const { user } = useUser();
   return (
     <div
-      className={` h-20 flex  items-center border-b border-gray-500 sm:px-24 lg:px-36  justify-between ${
-        isCourseListPage ? "bg-white" : "bg-cyan-100/70"
+      className={` h-20 flex  items-center border-b border-gray-500 px-5 sm:px-24 lg:px-36  justify-between ${
+        isCourseListPage ? "bg-white" : "bg-cyan-100/15"
       }`}
     >
       <img src={logo} alt="Logo" className="w-auto h-30 cursor-pointer" />

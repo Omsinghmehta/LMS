@@ -18,7 +18,7 @@ export default function App() {
 
   return (
     
-  <div className="bg-gradient-to-b from-cyan-100/70 via-cyan-100 to-white">
+  <div className="bg-gradient-to-b from-cyan-100/70 via-cyan-100 to-white w-[100vw] p-0 m-0 ">
 
       {
         !isEducatorRoute && <Navbar/>
