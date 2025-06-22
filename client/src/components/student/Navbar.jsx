@@ -9,7 +9,7 @@ export default function Navbar() {
   const { user } = useUser();
   return (
     <div
-      className={` h-20 flex  items-center border-b border-gray-500 px-5 sm:px-24 lg:px-36  justify-between ${
+      className={` h-20 flex  items-center border-b border-gray-500 px-5  sm:px-24 lg:px-36  justify-between ${
         isCourseListPage ? "bg-white" : "bg-cyan-100/15"
       }`}
     >

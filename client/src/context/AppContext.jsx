@@ -9,15 +9,26 @@ export const AppContextProvider = (props) => {
     setAllCourses(dummyCourses);
   };
 
+  const courseRate = (course) => {
+    if (course.courseRatings.length == 0) return 0;
+
+    let rate = 0;
+    course.courseRatings.forEach((rating) => {
+      rate+= rating.rating;
+    });
+    return rate / course.courseRatings.length;
+  };
+
   useEffect(() => {
     fetchAllCourse();
   }, []);
+
   const value = {
     currency,
-    allCourses,
+    allCourses,courseRate
   };
 
   return (
-    <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
+    <AppContext.Provider value={value }>{props.children}</AppContext.Provider>
   );
 };

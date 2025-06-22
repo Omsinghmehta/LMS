@@ -3,15 +3,16 @@ import Hero from '../../components/student/Hero'
 import React from 'react'
 import Companies from '@/components/student/Companies'
 import CourseSection from '@/components/student/CourseSection'
+import TestimonialSection from '@/components/student/TestimonialSection'
 
 export default function Home() {
   return (
-    <div className='  mt-[8rem] min-w-screen min-h-screen m-0 p-0'>
+    <div className='  mt-15 md:mt-[8rem] min-w-screen min-h-screen '>
       <Hero/>
       <SearchBar/>
       <Companies/>
       <CourseSection/>
-
+      <TestimonialSection/>
     </div>
   )
 }
