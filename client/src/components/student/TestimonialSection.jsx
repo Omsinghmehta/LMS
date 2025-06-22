@@ -4,8 +4,8 @@ import React from "react";
 export default function TestimonialSection() {
   return (
     <div className="   space-y-2 text-center ">
-      <h1 className="text-3xl text-gray-800">Testimonials</h1>
-      <div className="md:text-base mt-3 text-gray-500">
+      <h1 className="text-xl md:text-3xl text-gray-800">Testimonials</h1>
+      <div className=" text-sm px-4 mx-auto md:text-base mt-3 text-gray-500 ">
         Hear from our learners as they have share their journey of
         transformations, success, and how our <br /> plateform has made a
         difference in thier life.
@@ -43,8 +43,8 @@ export default function TestimonialSection() {
                 </p>
               </div>
 
-              <div className="text-blue-600 text-left">
-                <a href="#">Read More...</a>
+              <div className="text-blue-600 text-left underline ">
+                <a href="#">Read More</a>
               </div>
             </div>
           </div>
