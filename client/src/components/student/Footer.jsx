@@ -39,7 +39,6 @@ export default function Footer() {
         <div className="text-white/65">
           The latest news, article and resources, sent to your inbox weekly
         </div>
-        <div className=" flex flex-col  gap-3">
           <input
             type="text"
             placeholder="Enter your email"
@@ -48,7 +47,6 @@ export default function Footer() {
           <button className="text-white bg-blue-900 px-2 py-1 md:px-4 md:py-2 rounded text-xs md:text-xl">
             Subscribe
           </button>
-        </div>
       </div>
 
       <div className="text-white/65 w-[100vw] text-center space-y-4 text-sm md:text-xl">

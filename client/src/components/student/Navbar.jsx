@@ -4,13 +4,13 @@ import logo from "../../assets/lfy.png";
 import { UserCircle } from "lucide-react";
 import { useUser, useClerk, UserButton } from "@clerk/clerk-react";
 export default function Navbar() {
-  const isCourseListPage = location.pathname.includes("/course-list");
+  const isCourseListPage = location.pathname.includes("/courses-list");
   const { openSignIn } = useClerk();
   const { user } = useUser();
   return (
     <div
       className={` h-20 flex  items-center border-b border-gray-500 px-5  sm:px-24 lg:px-36  justify-between ${
-        isCourseListPage ? "bg-white" : "bg-cyan-100/15"
+        isCourseListPage ? "bg-white" : "bg-cyan-100/60"
       }`}
     >
       <img src={logo} alt="Logo" className="w-auto h-30 cursor-pointer" />

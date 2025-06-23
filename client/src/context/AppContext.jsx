@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { dummyCourses } from "../assets2/assets";
 import { createContext, useEffect, useState } from "react";
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
+  const navigate=useNavigate();
   const currency = import.meta.env.VITE_CURRENCY;
   const [allCourses, setAllCourses] = useState([]);
   const fetchAllCourse = async () => {
@@ -14,7 +16,7 @@ export const AppContextProvider = (props) => {
 
     let rate = 0;
     course.courseRatings.forEach((rating) => {
-      rate+= rating.rating;
+      rate += rating.rating;
     });
     return rate / course.courseRatings.length;
   };
@@ -25,10 +27,12 @@ export const AppContextProvider = (props) => {
 
   const value = {
     currency,
-    allCourses,courseRate
+    allCourses,
+    courseRate,
+    navigate
   };
 
   return (
-    <AppContext.Provider value={value }>{props.children}</AppContext.Provider>
+    <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
   );
 };
