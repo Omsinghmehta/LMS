@@ -40,8 +40,8 @@ export default function CourseDetails() {
 
   return (
     <div>
-      <div className="flex min-h-screen flex-col-reverse md:flex-row md:px-36 px-8 md:pt-30 pt-20 relative bg-gradient-to-b from-cyan-200/45   to-white justify-between gap-7 text-left">
-        <div className="absolute top-0 left-0 h-full w-full md:px-35 px-22 md:pt-20 ">
+      <div className=" min-h-screen  grid md:grid-cols-2  grid-cols-1  gap-10  bg-gradient-to-b from-cyan-200/45 to-white ">
+        <div className=" h-full w-full md:px-35 px-10 md:pt-20 pt-10">
           <h1 className="text-4xl font-semibold text-gray-800 ">
             {courseData.courseTitle}
           </h1>
@@ -139,7 +139,7 @@ export default function CourseDetails() {
                   </div>
                 </div>
               ))}
-              <div className=" my-10 pb-20">
+              <div className=" my-10 md:pb-20">
                 <h1 className="text-xl font-bold ">Course Description</h1>
                 <p
                   className="rich-text pt-3"
@@ -151,54 +151,56 @@ export default function CourseDetails() {
             </div>
           </div>
         </div>
-        <div className="absolute right-0 top-0 max-w-3xl rounded md:px-35 px-22 md:pt-20 w-fit">
+
+        {/* right side */}
+        <div className=" rounded md:px-45 px-10 md:pt-20 ">
           <img src={courseData.courseThumbnail} />
           <div className=" bg-white rounded-b shadow-md px-7 py-5">
             <div className="flex gap-2">
               <img src={assets.time_left_clock_icon} />
-              <p>
+              <p className="text-sm md:text-base">
                 <span className="text-red-500">5 days</span> left at this price
               </p>
             </div>
             <div className="flex gap-3 pt-3 items-center">
-              <h1 className="font-semibold text-3xl text-gray-800">
+              <h1 className="font-semibold text-xl md:text-3xl text-gray-800">
                 {currency}
                 {(
                   courseData.coursePrice -
                   (courseData.discount * courseData.coursePrice) / 100
                 ).toFixed(2)}
               </h1>
-              <h1 className="font-medium line-through text-md  text-gray-600">
+              <h1 className="font-medium line-through  text-xs md:text-base text-gray-600">
                 {currency}
                 {courseData.coursePrice}
               </h1>
-              <h1 className="font-medium text-md  text-gray-600">
+              <h1 className="font-medium text-xs md:text-base  text-gray-600">
                 {currency}
                 {courseData.discount}% off
               </h1>
             </div>
             <div className="flex items-center ">
-              <div className="flex gap-1 py-3">
-                <img src={assets.star} />
-                <p>{courseRate(courseData)}</p>
+              <div className="flex gap-1 py-3 items-center">
+                <img className="h-3 w-auto md:h-auto md:w-auto" src={assets.star} />
+                <p className="text-xs md:text-base">{courseRate(courseData)}</p>
               </div>
 
-              <div className="text-gray-500 px-5">|</div>
+              <div className="text-gray-500 px-3 md:px-5">|</div>
 
-              <div className="flex gap-1 py-3">
-                <img src={assets.time_clock_icon} />
-                <p>{calculateCourseTime(courseData)}</p>
+              <div className="flex gap-1 py-3 items-center">
+                <img className="h-3 w-auto md:h-auto md:w-auto" src={assets.time_clock_icon} />
+                <p className="text-xs md:text-base">{calculateCourseTime(courseData)}</p>
               </div>
 
-              <div className="text-gray-500 px-5">|</div>
+              <div className="text-gray-500 px-3 md:px-5">|</div>
 
-              <div className="flex gap-1 py-3">
-                <img src={assets.lesson_icon} />
-                <p>{calculateNoOfLecture(courseData.courseContent)} lessons</p>
+              <div className="flex gap-2 items-center  md:py-3">
+                <img src={assets.lesson_icon} className="h-3 w-auto md:h-auto md:w-auto"/>
+                <p className="text-xs md:text-base">{calculateNoOfLecture(courseData.courseContent)} lessons</p>
               </div>
             </div>
 
-            <button className="text-white bg-blue-600 cursor-pointer hover:bg-blue-500 w-full py-3 mt-1 md:mt-2 ">
+            <button className="text-white bg-blue-600 cursor-pointer hover:bg-blue-500 w-full py-2 md:py-3 mt-1 md:mt-2 ">
               {isEnrolled ? "Already Enrolled" : "Enroll Now"}
             </button>
 
