@@ -44,7 +44,7 @@ export default function CourseDetails() {
   return (
     <div>
       <div className=" min-h-screen  grid lg:grid-cols-2  grid-cols-1  lg:gap-10  bg-gradient-to-b from-cyan-200/45 to-white ">
-        <div className=" h-full w-full md:px-35 px-10 md:pt-20 pt-10">
+        <div className=" h-full w-full md:px-35 px-10 md:pt-20 pt-10 order-2 md:order-1">
           <h1 className="text-4xl font-semibold text-gray-800 ">
             {courseData.courseTitle}
           </h1>
@@ -167,17 +167,17 @@ export default function CourseDetails() {
         </div>
 
         {/* right side */}
-        <div className=" rounded xl:px-45 sm:px-18 px-10 md:pt-20 ">
+        <div className=" rounded xl:px-45 sm:px-18 px-10 md:pt-20 order-1 mt-10 md:mt-0 md:order-2 w-fit">
           {playedData ? (
             <YouTube
               videoId={playedData.videoId}
               opts={{ playerVars: { autoplay: 1 } }}
-              iframeClassName="w-full aspect-video"
+              iframeClassName="w-full aspect-video h-fit"
             />
           ) : (
             <img src={courseData.courseThumbnail} />
           )}
-          <div className=" bg-white rounded-b shadow-md px-7 py-5">
+          <div className=" bg-gray-50 rounded-b shadow-2xl px-7 py-5">
             <div className="flex gap-2">
               <img src={assets.time_left_clock_icon} />
               <p className="text-sm md:text-base">
@@ -210,7 +210,7 @@ export default function CourseDetails() {
                 <p className="text-xs md:text-base">{courseRate(courseData)}</p>
               </div>
 
-              <div className="text-gray-500 px-3 md:px-5">|</div>
+              <div className="text-gray-500 px-1 md:px-2">|</div>
 
               <div className="flex gap-1 py-3 items-center">
                 <img
@@ -222,7 +222,7 @@ export default function CourseDetails() {
                 </p>
               </div>
 
-              <div className="text-gray-500 px-3 md:px-5">|</div>
+              <div className="text-gray-500 px-1 md:px-2">|</div>
 
               <div className="flex gap-2 items-center  md:py-3">
                 <img

@@ -1,13 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { dummyCourses } from "../assets2/assets";
 import { createContext, useEffect, useState } from "react";
 import humanizeDuration from "humanize-duration";
+import { dummyCourses } from "@/assets2/assets";
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
   const navigate = useNavigate();
   const currency = import.meta.env.VITE_CURRENCY;
   const [allCourses, setAllCourses] = useState([]);
+  const [enrolledCourses,setEnrolledCourses]=useState([]);
+
   const fetchAllCourse = async () => {
     setAllCourses(dummyCourses);
   };
@@ -50,8 +52,12 @@ export const AppContextProvider = (props) => {
     return totalLecture;
   };
 
+  const fetchEnrolledCourses=async ()=>{
+   setEnrolledCourses(dummyCourses);
+  }
   useEffect(() => {
     fetchAllCourse();
+    fetchEnrolledCourses();
   }, []);
 
   const value = {
@@ -62,6 +68,8 @@ export const AppContextProvider = (props) => {
     calculateChapterTime,
     calculateCourseTime,
     calculateNoOfLecture,
+    fetchEnrolledCourses,
+    enrolledCourses
   };
 
   return (
