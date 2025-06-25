@@ -14,7 +14,7 @@ export default function SearchBar({ data }) {
   };
 
   return (
-    <div className=" mx-auto px-4 max-w-[500px] mt-10 ">
+    <div className=" mx-auto px-4 max-w-[500px] mt-10 md:relative right-5">
       <form onSubmit={submitHandler}>
         <div className="flex items-center border border-gray-400 rounded h-10 md:h-14 px-3 gap-2">
           <SearchIcon className="w-5 h-5 text-gray-500" />

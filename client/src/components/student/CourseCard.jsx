@@ -10,7 +10,7 @@ export default function CourseCard({ course }) {
       <div className="md:space-y-1 md:px-3 md:py-3 px-2 py-2">
         <h2 className="font-bold text-sm">{course?.courseTitle}</h2>
 
-        <p className="text-sm">{course?.educator?.name}</p>
+        <p className="text-sm">{'Learnify'}</p>
         <div className="flex items-center space-x-2 text-sm">
           <p>{courseRate(course)}</p>
           <div className="flex ">

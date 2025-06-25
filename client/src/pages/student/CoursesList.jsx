@@ -39,7 +39,7 @@ export default function CoursesList() {
         <div className=" px-10 md:px-30  mt-7  ">
 
         {
-          input && <div className="w-fit px-2 md:px-4 text-sm bg-gray-100 py-1 md:py-2 flex gap-2 md:gap-4 text-gray-800 border ">
+          input && <div className="w-fit px-2 md:px-4 rounded-full text-sm bg-gray-100 py-1 md:py-2 flex gap-2 md:gap-4 text-gray-800 border ">
             <p>{input}</p>
             <img src={assets.cross_icon} className="cursor-pointer" onClick={()=>navigate('/courses-list')}/>
           </div>

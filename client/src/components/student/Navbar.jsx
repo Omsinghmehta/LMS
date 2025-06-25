@@ -12,8 +12,9 @@ export default function Navbar() {
       className={` h-20 flex  items-center border-b border-gray-500 px-5  sm:px-24 lg:px-36  justify-between ${
         isCourseListPage ? "bg-white" : "bg-cyan-100/60"
       }`}
-    >
-      <img src={logo} alt="Logo" className="w-auto h-30 cursor-pointer" />
+    > 
+    <Link to={"/"}> <img src={logo} alt="Logo" className="w-auto h-30 cursor-pointer" /> </Link>
+      
       <div className=" hidden md:flex items-center gap-5 text-gray-500 ">
         <div className="flex items-center gap-5">
           {user && (
