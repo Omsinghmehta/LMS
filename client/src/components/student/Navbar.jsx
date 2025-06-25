@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/lfy.png";
 import { UserCircle } from "lucide-react";
 import { useUser, useClerk, UserButton } from "@clerk/clerk-react";
-export default function Navbar() {
+ export default function Navbar() {
   const isCourseListPage = location.pathname.includes("/courses-list");
   const { openSignIn } = useClerk();
   const { user } = useUser();
@@ -14,8 +14,7 @@ export default function Navbar() {
       }`}
     > 
     <Link to={"/"}> <img src={logo} alt="Logo" className="w-auto h-30 cursor-pointer" /> </Link>
-      
-      <div className=" hidden md:flex items-center gap-5 text-gray-500 ">
+       <div className=" hidden md:flex items-center gap-5 text-gray-500 ">
         <div className="flex items-center gap-5">
           {user && (
             <>
@@ -33,6 +32,7 @@ export default function Navbar() {
           >
             Create Account
           </button>
+         
         )}
       </div>
       <div className="md:hidden flex items-center gap-2">
@@ -41,6 +41,7 @@ export default function Navbar() {
             <>
               <button className="text-gray-500">Become Educator</button>|
               <Link to={"/my-enrollments"}> My Enrollments</Link>
+               
             </>
           )}
           <UserCircle />

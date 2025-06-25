@@ -1,9 +1,11 @@
 import { assets } from "@/assets2/assets";
 import Footer from "@/components/student/Footer";
+import Loading from "@/components/student/Loading";
 import { AppContext } from "@/context/AppContext";
 import humanizeDuration from "humanize-duration";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import YouTube from "react-youtube";
 
 export default function CourseDetails() {
   const { id } = useParams();
@@ -18,6 +20,7 @@ export default function CourseDetails() {
   const [courseData, setCourseData] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(0);
   const [openSection, setOpenSection] = useState({});
+  const [playedData, setPlayerData] = useState(null);
 
   const toggleSection = (index) => {
     setOpenSection((prev) => ({ ...prev, [index]: !prev[index] }));
@@ -29,18 +32,18 @@ export default function CourseDetails() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [allCourses]);
 
   if (!courseData)
     return (
       <div className="text-center text-3xl font-bold md:mt-30 mt-10">
-        Loading data...
+        <Loading />
       </div>
     );
 
   return (
     <div>
-      <div className=" min-h-screen  grid md:grid-cols-2  grid-cols-1  gap-10  bg-gradient-to-b from-cyan-200/45 to-white ">
+      <div className=" min-h-screen  grid lg:grid-cols-2  grid-cols-1  lg:gap-10  bg-gradient-to-b from-cyan-200/45 to-white ">
         <div className=" h-full w-full md:px-35 px-10 md:pt-20 pt-10">
           <h1 className="text-4xl font-semibold text-gray-800 ">
             {courseData.courseTitle}
@@ -123,7 +126,18 @@ export default function CourseDetails() {
                             <p>{lecture.lectureTitle}</p>
                             <div className="flex gap-3">
                               {lecture.isPreviewFree && (
-                                <p className="text-blue-500">Preview</p>
+                                <p
+                                  className="text-blue-500"
+                                  onClick={() =>
+                                    setPlayerData({
+                                      videoId: lecture.lectureUrl
+                                        .split("/")
+                                        .pop(),
+                                    })
+                                  }
+                                >
+                                  Preview
+                                </p>
                               )}
                               <p>
                                 {humanizeDuration(
@@ -153,8 +167,16 @@ export default function CourseDetails() {
         </div>
 
         {/* right side */}
-        <div className=" rounded md:px-45 px-10 md:pt-20 ">
-          <img src={courseData.courseThumbnail} />
+        <div className=" rounded xl:px-45 sm:px-18 px-10 md:pt-20 ">
+          {playedData ? (
+            <YouTube
+              videoId={playedData.videoId}
+              opts={{ playerVars: { autoplay: 1 } }}
+              iframeClassName="w-full aspect-video"
+            />
+          ) : (
+            <img src={courseData.courseThumbnail} />
+          )}
           <div className=" bg-white rounded-b shadow-md px-7 py-5">
             <div className="flex gap-2">
               <img src={assets.time_left_clock_icon} />
@@ -181,22 +203,35 @@ export default function CourseDetails() {
             </div>
             <div className="flex items-center ">
               <div className="flex gap-1 py-3 items-center">
-                <img className="h-3 w-auto md:h-auto md:w-auto" src={assets.star} />
+                <img
+                  className="h-3 w-auto md:h-auto md:w-auto"
+                  src={assets.star}
+                />
                 <p className="text-xs md:text-base">{courseRate(courseData)}</p>
               </div>
 
               <div className="text-gray-500 px-3 md:px-5">|</div>
 
               <div className="flex gap-1 py-3 items-center">
-                <img className="h-3 w-auto md:h-auto md:w-auto" src={assets.time_clock_icon} />
-                <p className="text-xs md:text-base">{calculateCourseTime(courseData)}</p>
+                <img
+                  className="h-3 w-auto md:h-auto md:w-auto"
+                  src={assets.time_clock_icon}
+                />
+                <p className="text-xs md:text-base">
+                  {calculateCourseTime(courseData)}
+                </p>
               </div>
 
               <div className="text-gray-500 px-3 md:px-5">|</div>
 
               <div className="flex gap-2 items-center  md:py-3">
-                <img src={assets.lesson_icon} className="h-3 w-auto md:h-auto md:w-auto"/>
-                <p className="text-xs md:text-base">{calculateNoOfLecture(courseData.courseContent)} lessons</p>
+                <img
+                  src={assets.lesson_icon}
+                  className="h-3 w-auto md:h-auto md:w-auto"
+                />
+                <p className="text-xs md:text-base">
+                  {calculateNoOfLecture(courseData.courseContent)} lessons
+                </p>
               </div>
             </div>
 
