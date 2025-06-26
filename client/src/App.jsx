@@ -31,9 +31,9 @@ export default function App() {
 
         {/* educator */}
         <Route path="/educator" element={<Educator />}>
-          <Route path="educator" element={<DashBoard />}></Route>
+          <Route path="/educator" element={<DashBoard />}></Route>
           <Route path="add-course" element={<AddCourse />}></Route>
-          <Route path="my-course" element={<MyCourses />}></Route>
+          <Route path="my-courses" element={<MyCourses />}></Route>
           <Route path="student-enrolled" element={<StudentEnrolled />}></Route>
         </Route>
       </Routes>

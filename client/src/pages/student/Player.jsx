@@ -116,16 +116,16 @@ if (!courseData) {
       {/* right */}
       <div className="md:mt-15 mt-10">
         {
-          playerData?(<div><YouTube  videoId={playerData.lectureUrl.split('/').pop()}
+          playerData?(<div ><YouTube  videoId={playerData.lectureUrl.split('/').pop()}
              
-              iframeClassName="w-full aspect-video h-fit"
+              iframeClassName="w-full aspect-video h-fit rounded-2xl shadow-2xl border-gray-200"
              />
              <div className="flex items-center justify-between mt-1 text-[10px] lg:text-base">
               <p>{playerData.chapter}.{playerData.lecture} {playerData.lectureTitle}</p>
               <button className="text-blue-600">{false?'Completed':'Mark complete'}</button>
              </div>
              
-             </div>):<img src={courseData.courseThumbnail}/>
+             </div>):<img className=" rounded-xl border-gray-200 shadow-2xl"src={courseData.courseThumbnail }/>
 
         }
       </div>

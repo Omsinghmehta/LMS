@@ -5,8 +5,8 @@ export default function CourseCard({ course }) {
   const { currency,courseRate,navigate,} = useContext(AppContext);
 
   return (
-    <div className=" rounded-xl border-1 border-gray-400" onClick={()=>navigate(`course/${course._id}`)}>
-      <img className="rounded-xl" src={course?.courseThumbnail} />
+    <div className=" rounded-md border-1 cursor-pointer border-gray-400" onClick={()=>navigate(`course/${course._id}`)}>
+      <img className="rounded-t-md" src={course?.courseThumbnail} />
       <div className="md:space-y-1 md:px-3 md:py-3 px-2 py-2">
         <h2 className="font-bold text-sm">{course?.courseTitle}</h2>
 

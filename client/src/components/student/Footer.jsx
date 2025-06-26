@@ -1,12 +1,13 @@
 import React from "react";
 import logo from "../../assets/lfy.png";
+import { assets } from "@/assets2/assets";
 
 export default function Footer() {
   return (
     <div className="bg-gray-900 grid grid-cols-1 mx-auto md:grid-cols-3  py-6 mt-30 ">
-      <div className="flex flex-col px-32 gap-y-5 ">
-        <p className="h-20 w-30 ">
-          <img src={logo} />
+      <div className="flex flex-col px-30 gap-y-4 ">
+        <p className="h-20 w-30  ">
+          <img src={assets.learnify} />
         </p>
         <p className="text-white/65 ">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum at que
@@ -51,7 +52,7 @@ export default function Footer() {
 
       <div className="text-white/65 w-[100vw] text-center space-y-4 text-sm md:text-xl">
         <hr/>
-        <p>Copyright 2025 &copy; Learnify. All Right Reserved</p>
+        <p className="text-sm md:text-base">Copyright 2025 &copy; Learnify. All Right Reserved</p>
       </div>
     </div>
   );

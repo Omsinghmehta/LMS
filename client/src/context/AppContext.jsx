@@ -9,7 +9,7 @@ export const AppContextProvider = (props) => {
   const currency = import.meta.env.VITE_CURRENCY;
   const [allCourses, setAllCourses] = useState([]);
   const [enrolledCourses,setEnrolledCourses]=useState([]);
-
+  const [isEducator,setIsEducator]=useState(1);
   const fetchAllCourse = async () => {
     setAllCourses(dummyCourses);
   };
@@ -69,7 +69,8 @@ export const AppContextProvider = (props) => {
     calculateCourseTime,
     calculateNoOfLecture,
     fetchEnrolledCourses,
-    enrolledCourses
+    enrolledCourses,
+    isEducator
   };
 
   return (

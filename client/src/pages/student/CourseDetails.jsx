@@ -85,7 +85,7 @@ export default function CourseDetails() {
           </p>
           <div className="pt-8 text-gray-600">
             <h2 className="font-semibold text-xl">Course Structure</h2>
-            <div className="mt-6 max-w-xl cursor-pointer">
+            <div className="mt-6 max-w-xl cursor-pointer text-xs lg:text-sm">
               {courseData.courseContent.map((chapter, idx) => (
                 <div
                   key={idx}
@@ -111,7 +111,7 @@ export default function CourseDetails() {
                   </div>
 
                   <div
-                    className={` px-4 transition-all duration-500 ease-in-out ${
+                    className={` px-2 lg:px-4 transition-all duration-500 ease-in-out ${
                       openSection[idx] ? "  max-h-96 " : "max-h-0"
                     }`}
                   >
@@ -119,7 +119,7 @@ export default function CourseDetails() {
                       {chapter.chapterContent.map((lecture, i) => (
                         <li
                           key={i}
-                          className="flex  gap-2 pl-4 py-1 cursor-pointer"
+                          className="flex  gap-2 pl-2 lg:pl-4 py-1 cursor-pointer"
                         >
                           <img src={assets.play_icon} />
                           <div className="flex justify-between w-full">
@@ -167,17 +167,17 @@ export default function CourseDetails() {
         </div>
 
         {/* right side */}
-        <div className=" rounded xl:px-45 sm:px-18 px-10 md:pt-20 order-1 mt-10 md:mt-0 md:order-2 w-fit">
+        <div className=" rounded xl:px-45 sm:px-18 px-10 md:pt-20 order-1 mt-10 md:mt-0 md:order-2 w-fit ">
           {playedData ? (
             <YouTube
               videoId={playedData.videoId}
               opts={{ playerVars: { autoplay: 1 } }}
-              iframeClassName="w-full aspect-video h-fit"
+              iframeClassName="w-full aspect-video h-fit "
             />
           ) : (
             <img src={courseData.courseThumbnail} />
           )}
-          <div className=" bg-gray-50 rounded-b shadow-2xl px-7 py-5">
+          <div className=" bg-gray-50 rounded-b shadow-xl px-7 py-5">
             <div className="flex gap-2">
               <img src={assets.time_left_clock_icon} />
               <p className="text-sm md:text-base">

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 export default function Rating({ initialRating ,onRate}) {
   const [rating, setRating] = useState(initialRating || 0);
+  
   const handleRating=(value)=>{
     setRating(value);
     if(onRate) onRate(value);
