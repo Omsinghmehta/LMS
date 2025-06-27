@@ -49,7 +49,7 @@ export default function MyEnrollments() {
                 </div>
               </td >
               <td className="px-4 py-3 max-sm:text-right">
-                <button onClick={()=>{navigate('/player/'+course._id)}} className="px-3 sm:px-5 py-1.5 bg-blue-600 text-white rounded max-sm:text-xs">{(progressArray[i] && `${progressArray[i].lecturesCompleted}`===`${progressArray[i].totalLectures}`)?'Completed':'Ongoing'}</button>
+                <button onClick={()=>{navigate('/player/'+course._id)}} className="px-3 sm:px-5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded max-sm:text-xs">{(progressArray[i] && `${progressArray[i].lecturesCompleted}`===`${progressArray[i].totalLectures}`)?'Completed':'Ongoing'}</button>
               </td>
             </tr>
           ))}
