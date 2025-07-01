@@ -1,10 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config'
-import { clerkWebHooks } from './configs/webhooks';
+import { clerkWebHooks } from './controllers/webhooks.js';
+import connectDB from './configs/mongodb.js';
 
 const app=express();
-
+await connectDB()
 app.use(cors());
 
 app.get('/',(req,res)=>res.send('API Working'));
