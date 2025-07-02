@@ -21,7 +21,7 @@ export default function MyEnrollments() {
 ]
 )
   return (
-    <div className="px-8 md:px-36 md:py-12 pt-10  min-h-screen bg-white">
+    <div className="px-8 md:px-36 md:py-12 pt-10  min-h-screen ">
       <h1 className="text-2xl font-bold">My Enrollments</h1>
       <table className="border w-full mt-10 border-gray-300 ">
         <thead className="md:table-auto max-sm:hidden border-b text-left overflow-hidden border-gray-400/75 text-sm bg-gray-100">

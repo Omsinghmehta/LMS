@@ -1,6 +1,6 @@
 import React, { act, useEffect, useRef, useState } from "react";
 import Quill from "quill";
-import uniqid from "uniqid";
+import {nanoid} from "nanoid";
 import { assets } from "@/assets2/assets";
 
 export default function AddCourse() {
@@ -29,7 +29,7 @@ export default function AddCourse() {
       if(title)
       {
         const newChapter={
-          chapterId:uniqid(),
+          chapterId:nanoid(),
           chapterTitle:title,
           chapterContent:[],
           collapsed:false,
@@ -72,7 +72,7 @@ export default function AddCourse() {
             const newLecture={
               ...lectureDetails,
               lectureOrder:chapter.chapterContent.length>0 ?chapter.chapterContent.slice(-1)[0].lectureOrder+1:1,
-              lectureId:uniqid()
+              lectureId:nanoid()
             };
             chapter.chapterContent.push(newLecture);
           }

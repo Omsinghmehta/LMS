@@ -12,7 +12,7 @@ export default function TestimonialSection() {
       </div>
       <div className="grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mx-auto gap-8 max-w-6xl mt-14 ">
         {dummyTestimonial.map((data, index) => (
-          <div className="   border border-gray-300 m-8 rounded ">
+          <div key={index} className="   border border-gray-300 m-8 rounded ">
             <div key={index} className="flex gap-x-4 bg-gray-300/40 py-3 px-4">
               <img
                 src={data.image}
