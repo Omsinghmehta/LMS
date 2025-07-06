@@ -56,35 +56,49 @@ export const clerkWebHooks = async (req, res) => {
 };
 
 
-const stripeInstance = new Stripe(process.env.STRIPE_WEBHOOK_SECRET);
+const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
 export const stripeWebhooks = async (req, res) => {
+    console.log('🔥 Stripe webhook endpoint hit!'); // <== THIS MUST PRINT
+
   const sig = req.headers['stripe-signature']
   let event;
+  console.log("type",event.type)
   try {
     event = Stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET)
 switch (event.type){
-  case 'payment_intent.succeeded':{
-    const paymentIntent=event.data.object;
-    const paymentIntentId=paymentIntent.id;
+  case 'payment_intent.succeeded': {
+  const paymentIntent = event.data.object;
+  const paymentIntentId = paymentIntent.id;
+  console.log('✅ Webhook received: payment_intent.succeeded');
+  console.log('👉 PaymentIntent ID:', paymentIntentId);
 
-    const session= await stripeInstance.checkout.sessions.list({
-      payment_intent:paymentIntentId
-    })
+  const sessionList = await stripeInstance.checkout.sessions.list({
+    payment_intent: paymentIntentId,
+  });
 
-    const {purchaseId}=session.data[0].metadata;
-    const purchaseData=await Purchase.findById(purchaseId);
-    const courseData=await Course.findById(purchaseData.courseId.toString());
-    const userData=await User.findById(purchaseData.userId);
-
-    courseData.enrolledStudents.push(userData);
-    await courseData.save();
-
-    userData.enrolledCourses.push(courseData._id);
-    await userData.save();
-    purchaseData.status='completed'
-
+  const session = sessionList.data[0];
+  if (!session?.metadata?.purchaseId) {
+    console.error('❌ purchaseId missing in metadata');
     break;
   }
+
+  const { purchaseId } = session.metadata;
+  console.log('🛒 Purchase ID from metadata:', purchaseId);
+
+  const purchaseData = await Purchase.findById(purchaseId);
+  console.log('🎯 Found purchase:', purchaseData);
+
+  if (!purchaseData) {
+    console.error('❌ Purchase not found in DB');
+    break;
+  }
+
+  purchaseData.status = 'completed';
+  await purchaseData.save();
+  console.log('✅ Status updated and saved:', purchaseData.status);
+
+  break;
+}
 
    case 'payment_intent.payment_failed':{
        const paymentIntent=event.data.object;

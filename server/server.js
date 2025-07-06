@@ -10,23 +10,30 @@ import courseRouter from './routes/courseRouter.js';
 import userRouter from './routes/userRoutes.js';
 
 const app = express();
-//  Connect DBs
+
+// ✅ Step 1: Connect DBs
 await connectDB();
 await connectCloudinary();
-//  Middlewares
-app.use(cors());
-app.use(clerkMiddleware()); 
-app.use(express.json());   
 
+// ✅ Step 2: Raw route first for Stripe
+app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks);
+
+// ✅ Step 3: Use global middlewares
+app.use(cors());
+app.use(clerkMiddleware());
+app.use(express.json()); // Now safe to use
+
+// ✅ Step 4: Other routes
 app.post('/clerk', clerkWebHooks);
 app.use('/api/educator', educatorRouter);
-app.use('/api/course',express.json(),courseRouter);
-app.use('/api/user',express.json(),userRouter);
-app.post('/stripe',express.raw({type:'application/json'}),stripeWebhooks);
+app.use('/api/course', courseRouter);
+app.use('/api/user', userRouter);
 
+// ✅ Step 5: Test route
 app.get('/', (req, res) => res.send('API Working'));
-// Start server
+
+// ✅ Step 6: Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server is running at ${PORT}`);
+  console.log(`🚀 Server is running at ${PORT}`);
 });
