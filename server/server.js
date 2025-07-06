@@ -21,13 +21,12 @@ app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks);
 // ✅ Step 3: Use global middlewares
 app.use(cors());
 app.use(clerkMiddleware());
-app.use(express.json()); // Now safe to use
 
 // ✅ Step 4: Other routes
-app.post('/clerk', clerkWebHooks);
-app.use('/api/educator', educatorRouter);
-app.use('/api/course', courseRouter);
-app.use('/api/user', userRouter);
+app.post('/clerk', express.json(),clerkWebHooks);
+app.use('/api/educator',express.json(), educatorRouter);
+app.use('/api/course',express.json(), courseRouter);
+app.use('/api/user',express.json(), userRouter);
 
 // ✅ Step 5: Test route
 app.get('/', (req, res) => res.send('API Working'));
