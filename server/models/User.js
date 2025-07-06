@@ -17,11 +17,11 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    enrolledCourses: {
+    enrolledCourses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
-    },
-}, { timeStamps: true })
+    }],
+}, { timestamps: true })
 
 const User = mongoose.model('User', userSchema);
 export default User;
