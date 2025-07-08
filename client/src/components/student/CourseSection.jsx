@@ -5,7 +5,9 @@ import CourseCard from "./CourseCard";
 
 export default function CourseSection() {
   const { allCourses } = useContext(AppContext);
-  // console,log(allCourses)
+  console.log(allCourses)
+
+
   return (
     <div className="py-16 px-8 max-w-9xl  space-y-6 ">
       <h2 className=" text-xl md:text-3xl text-center text-black  mx-auto max-w-xs">

@@ -93,7 +93,6 @@ export const purchaseCourse = async (req, res) => {
 
 export const updateUserCourseProgress = async (req, res) => {
   try {
-
     const { userId } = req.auth();
     const { courseId, lectureId } = req.body;
     const progress = await CourseProgress.findOne({ courseId, userId });
@@ -106,7 +105,7 @@ export const updateUserCourseProgress = async (req, res) => {
     }
 
     else {
-      await progress.create({ userId, courseId, lectureCompleted: [lectureId] })
+      await CourseProgress.create({ userId, courseId, lectureCompleted: [lectureId] })
     }
     res.json({ success: true, message: 'Progress Updated' });
   } catch (error) {
@@ -153,7 +152,7 @@ export const addUserRating = async (req, res) => {
       course.courseRatings.push({ userId, rating });
     }
     else {
-      course.courseRatings[ratingIndex].ratings = rating
+      course.courseRatings[ratingIndex].rating = rating
     }
     await course.save();
     res.json({ success: true, message: 'Rating Added' });

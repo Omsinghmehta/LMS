@@ -2,9 +2,11 @@ import { assets } from "@/assets2/assets";
 import Footer from "@/components/student/Footer";
 import Loading from "@/components/student/Loading";
 import { AppContext } from "@/context/AppContext";
+import axios from "axios";
 import humanizeDuration from "humanize-duration";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import YouTube from "react-youtube";
 
 export default function CourseDetails() {
@@ -16,23 +18,64 @@ export default function CourseDetails() {
     calculateChapterTime,
     calculateNoOfLecture,
     currency,
+    backendUrl,
+    userData,
+    getToken
   } = useContext(AppContext);
   const [courseData, setCourseData] = useState(null);
-  const [isEnrolled, setIsEnrolled] = useState(0);
   const [openSection, setOpenSection] = useState({});
   const [playedData, setPlayerData] = useState(null);
+  const [isAlreaduEnrolled,setIsAlreaduEnrolled]=useState(0);
 
   const toggleSection = (index) => {
     setOpenSection((prev) => ({ ...prev, [index]: !prev[index] }));
   };
-  const fetchData = () => {
-    const details = allCourses.find((course) => course._id === id);
-    setCourseData(details);
-  };
+  const fetchData = async() => {
+    try {
+      const {data}=await axios.get(`${backendUrl}/api/course/${id}`);
 
+      if(data.success){
+        setCourseData(data.courseData);
+      }else{
+        toast.error(data.message);
+      }
+    } catch (error) {
+        toast.error(error.message);
+    }
+  };
+const enrollCourse=async (req,res)=>{
+  try {
+    if(!userData)
+    {
+      return toast.warn('Login To Enroll')
+    }
+    else if(isAlreaduEnrolled)
+    {
+      return toast.warn('Already Enrolled');
+    }
+    const token=await getToken();
+    const {data}=await axios.post(`${backendUrl}/api/user/purchase`,{courseId:courseData._id},{headers:{Authorization:`Bearer ${token}`}})
+    if(data.success){
+      const {session_url}=data;
+      window.location.replace(session_url);
+
+    }else{
+      return toast.error(data.message);
+
+    }
+  } catch (error) {
+      return toast.error(error.message);
+    
+  }
+}
   useEffect(() => {
     fetchData();
-  }, [allCourses]);
+  }, []);
+
+   useEffect(() => {
+    if(userData && courseData)
+    setIsAlreaduEnrolled(userData.enrolledCourses.includes(courseData._id));
+  }, [userData,courseData]);
 
   if (!courseData)
     return (
@@ -81,7 +124,7 @@ export default function CourseDetails() {
             </p>
           </div>
           <p className="text-sm">
-            Course by <span className="text-blue-600 underline">Learnify</span>
+            Course by <span className="text-blue-600 underline">{courseData.educator.name}</span>
           </p>
           <div className="pt-8 text-gray-600">
             <h2 className="font-semibold text-xl">Course Structure</h2>
@@ -235,8 +278,8 @@ export default function CourseDetails() {
               </div>
             </div>
 
-            <button className="text-white bg-blue-600 cursor-pointer hover:bg-blue-500 w-full py-2 md:py-3 mt-1 md:mt-2 ">
-              {isEnrolled ? "Already Enrolled" : "Enroll Now"}
+            <button onClick={enrollCourse} className="text-white bg-blue-600 cursor-pointer hover:bg-blue-500 w-full py-2 md:py-3 mt-1 md:mt-2 ">
+              {isAlreaduEnrolled ? "Already Enrolled" : "Enroll Now"}
             </button>
 
             <div className="pt-6">
