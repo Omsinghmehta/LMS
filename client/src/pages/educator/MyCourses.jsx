@@ -1,18 +1,33 @@
 import Loading from "@/components/student/Loading";
 import { AppContext } from "@/context/AppContext";
+import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function MyCourses() {
-  const { allCourses, currency } = useContext(AppContext);
+  const { currency, getToken,isEducator,backendUrl } = useContext(AppContext);
   const [courses, setCourses] = useState(null);
 
-  const fetchCourseData = () => {
-    setCourses(allCourses);
-  };
 
+ const fetchEducatorCourses=async()=>{
+    try {
+      const token =await getToken();
+      const {data}=await axios.get(`${backendUrl}/api/educator/courses`,{headers:{Authorization:`Bearer ${token}`}});
+
+    if (data.success) {
+      setCourses(data.courses);
+    } else {
+      toast.error(data.message || "Could not fetch courses");
+    }
+    } catch (error) {
+      toast.error(error.message)
+    }
+ }
+ 
   useEffect(() => {
-    fetchCourseData();
-  }, []);
+    if(isEducator)
+    fetchEducatorCourses();
+  }, [isEducator]);
 
   return courses ? (
     <div>
@@ -36,8 +51,13 @@ export default function MyCourses() {
               {courses?.map((course, idx) => (
                 <tr key={idx} className="border-b border-gray-500/20">
                   <td className="md:px-4 py-3 pl-2 md:pl-4 truncate space-x-3 flex items-center ">
-                    <img src={course?.courseThumbnail} className="w-16 " />
-                    <span className="truncate hidden md:block">
+{course?.courseThumbnail ? (
+  <img src={course.courseThumbnail} className="w-16" />
+) : (
+  <div className="w-16 h-10 bg-gray-200 flex items-center justify-center text-xs text-gray-500">
+    No Image
+  </div>
+)}                    <span className="truncate hidden md:block">
                       {course?.courseTitle}
                     </span>
                   </td>
