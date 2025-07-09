@@ -75,7 +75,7 @@ import { toast } from "react-toastify";
                
             </>
           )}
-          <UserCircle />
+          <UserCircle  onClick={() => openSignIn()}/>
         </div>
       </div>
     </div>
