@@ -59,7 +59,7 @@ import { toast } from "react-toastify";
         ) : (
           <button
             onClick={() => openSignIn()}
-            className="text-white px-5 py-2 bg-blue-700 hover:bg-blue-600 cursor-pointer rounded-full"
+            className="text-white px-5 py-2 bg-white hover:bg-blue-600 cursor-pointer rounded-full"
           >
             Create Account
           </button>
@@ -76,7 +76,10 @@ import { toast } from "react-toastify";
                
             </>
           )}
-          <UserCircle  onClick={() => openSignIn()}/>
+         { 
+          user ? <UserButton/>
+          :<button  className="text-white px-5 py-2 bg-blue-700 hover:bg-blue-600 cursor-pointer rounded-full" onClick={() => openSignIn()} src={assets.user_icon}>SignIn</button>
+          }
         </div>
       </div>
     </div>
