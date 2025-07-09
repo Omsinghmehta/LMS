@@ -21,12 +21,13 @@ export default function Player() {
 
 
   const getCourseData = () => {
-  enrolledCourses.map((course) => {
+
+  enrolledCourses?.map((course) => {
     if(course._id === courseId){
     setCourseData(course);
     course?.courseRatings?.map((item) => {
       if(item.userId === userData._id){
-        setInitialRating(item.rating)
+        setInitialRating(item?.rating || 0)
       }}
     )
   }})}
@@ -54,7 +55,7 @@ const getCourseProgressData=async()=>{
     const token=await getToken();
     const {data}=await axios.post(`${backendUrl}/api/user/get-course-progress`,{courseId},{headers:{Authorization:`Bearer ${token}`}})
     if(data.success){
-      setProgressData(data.progress)
+      setProgressData(data.progress || 0)
     }else{
       toast.error(data.message)
     }
@@ -116,8 +117,8 @@ useEffect(()=>{
                     <p className="font-medium "> {chapter.chapterTitle}</p>
                   </div>
                   <p>
-                    {chapter?.chapterContent?.length} lectures -{" "}
-                    {calculateChapterTime(chapter.chapterContent)}
+                    {chapter?.chapterContent?.length || 0} lectures -{" "}
+                    {calculateChapterTime(chapter?.chapterContent ) || '0'}
                   </p>
                 </div>
 
@@ -180,10 +181,10 @@ useEffect(()=>{
              />
              <div className="flex items-center justify-between mt-1 text-[10px] lg:text-base">
               <p>{playerData.chapter}.{playerData?.lecture} {playerData?.lectureTitle}</p>
-              <button onClick={()=>markLectureCompleted(playerData?.lectureId)} className="text-blue-600">{progressData && progressData.lectureCompleted.includes(playerData.lectureId)?'Completed':'Mark complete'}</button>
+              <button onClick={()=>markLectureCompleted(playerData?.lectureId)} className="text-blue-600">{progressData && progressData.lectureCompleted?.includes(playerData?.lectureId)?'Completed':'Mark complete'}</button>
              </div>
              
-             </div>):<img className=" rounded-xl border-gray-200 shadow-2xl"src={courseData.courseThumbnail }/>
+             </div>):<img className=" rounded-xl border-gray-200 shadow-2xl"src={courseData?.courseThumbnail|| assets.course_1_thumbnail }/>
 
         }
       </div>

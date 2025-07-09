@@ -11,9 +11,10 @@ export default function CoursesList() {
   const { input } = useParams();
   const [filterCards,setfilterCard]=useState([]);
 
+  
   useEffect(()=>{
     if( allCourses.length>0){
-      input?setfilterCard(allCourses.filter((course)=>(course.courseTitle.toLowerCase().includes(input.toLowerCase())))):setfilterCard(allCourses)
+      input?setfilterCard(allCourses.filter((course)=>(course?.courseTitle?.toLowerCase().includes(input.toLowerCase())))):setfilterCard(allCourses)
     }
   },[allCourses,input])
   return (

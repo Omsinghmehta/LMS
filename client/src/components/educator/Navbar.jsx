@@ -1,11 +1,12 @@
 import React from "react";
-import { assets, dummyEducatorData } from "@/assets2/assets";
+import { assets } from "@/assets2/assets";
 import { UserButton, useUser } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
+import Loading from "../student/Loading";
 
 export default function Navbar() {
-  const educatorData = dummyEducatorData;
   const { user } = useUser();
+  if(!user) return <Loading/>
   return (
     <div className="h-20 flex items-center justify-between px-4 sm:px-10 lg:px-15  py-0 text-gray-500 border-b ">
       <Link to="/">

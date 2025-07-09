@@ -32,27 +32,38 @@ export const AppContextProvider = (props) => {
     }
   };
 
-  const fetchUserData = async () => {
-    if (user.publicMetadata.role === "educator") {
-      setIsEducator(1);
-      try {
-        const token = await getToken();
-        const { data } = await axios.get(`${backendUrl}/api/user/data`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (data.success) {
-          setUserData(data.user);
-        } else {
-          toast.error(data.message);
-        }
-      } catch (error) {
-        toast.error(error.message);
+const fetchUserData = async () => {
+  try {
+    const token = await getToken();
+    const { data } = await axios.get(`${backendUrl}/api/user/data`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log("user",data)
+
+    if (data.success) {
+      setUserData(data.user);
+      if (data.user.role === "educator") {
+        setIsEducator(1);
       }
+    } else {
+      toast.error(data.message);
     }
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
+
+useEffect(() => {
+  const logToken = async () => {
+    const token = await getToken();
+    console.log(token);
   };
 
+  logToken();
+}, []);
+
   const courseRate = (course) => {
-    if (course.courseRatings.length == 0) return 0;
+    if (course?.courseRatings?.length == 0) return 0;
 
     let rate = 0;
     course.courseRatings.forEach((rating) => {
@@ -65,7 +76,7 @@ export const AppContextProvider = (props) => {
     try {
       let time = 0;
       chapter.forEach((lecture) => {
-        time += lecture.lectureDuration;
+        time += lecture?.lectureDuration;
       });
       return humanizeDuration(time * 60 * 1000, { units: ["h", "m"] });
     } catch (error) {
@@ -77,8 +88,8 @@ export const AppContextProvider = (props) => {
     try {
       let time = 0;
       course?.courseContent?.forEach((chapter) =>
-        chapter.chapterContent.forEach((lecture) => {
-          time += lecture.lectureDuration;
+        chapter?.chapterContent?.forEach((lecture) => {
+          time += lecture?.lectureDuration;
         })
       );
       return humanizeDuration(time * 60 * 1000, { units: ["h", "m"] });
@@ -92,8 +103,8 @@ export const AppContextProvider = (props) => {
       let totalLecture = 0;
 
       courseContent?.forEach((chapter) => {
-        if (Array.isArray(chapter.chapterContent)) {
-          totalLecture += chapter.chapterContent.length;
+        if (Array.isArray(chapter?.chapterContent)) {
+          totalLecture += chapter?.chapterContent?.length;
         }
       });
 
@@ -111,7 +122,7 @@ export const AppContextProvider = (props) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (data.success) {
-        setEnrolledCourses(data.enrolledCourses.reverse());
+        setEnrolledCourses(data?.enrolledCourses?.reverse());
       } else {
         toast.error(data.message);
       }

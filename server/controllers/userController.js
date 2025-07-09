@@ -7,6 +7,8 @@ import { CourseProgress } from "../models/courseProgress.js";
 export const getUserData = async (req, res) => {
   try {
     const { userId } = await req.auth();
+    console.log(userId)
+    
     const user = await User.findById(userId);
     if (!user) {
       return res.json({ success: false, message: 'user not found' });
@@ -93,7 +95,7 @@ export const purchaseCourse = async (req, res) => {
 
 export const updateUserCourseProgress = async (req, res) => {
   try {
-    const { userId } = req.auth();
+    const { userId } =await req.auth();
     const { courseId, lectureId } = req.body;
     const progress = await CourseProgress.findOne({ courseId, userId });
     if (progress) {
@@ -118,7 +120,7 @@ export const updateUserCourseProgress = async (req, res) => {
 export const getUserProgressData = async (req, res) => {
   try {
 
-    const { userId } = req.auth();
+    const { userId } = await req.auth();
     const { courseId } = req.body;
     const progress = await CourseProgress.findOne({ courseId, userId });
 
@@ -131,7 +133,7 @@ export const getUserProgressData = async (req, res) => {
 
 export const addUserRating = async (req, res) => {
   try {
-    const { userId } = req.auth();
+    const { userId } =await req.auth();
     const { courseId, rating } = req.body;
 
     if (!courseId || !userId || !rating || rating < 1 || rating > 5) {

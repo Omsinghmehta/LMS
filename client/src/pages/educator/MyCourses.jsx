@@ -59,7 +59,7 @@ export default function MyCourses() {
                 </div>
               )}     
                <span className="truncate hidden md:block">
-                      {course?.courseTitle}
+                      {course?.courseTitle|| "xyz"}
                     </span>
                   </td>
                   <td className="px-4 py-3">
@@ -71,7 +71,7 @@ export default function MyCourses() {
                     {course?.enrolledStudents?.length || 0}
                   </td>
                   <td className=" md:px-4 py-3 ">
-                    {new Date(course.createdAt).toLocaleDateString()}
+                    {new Date(course?.createdAt).toLocaleDateString()}
                   </td>
                 </tr>
               ))}

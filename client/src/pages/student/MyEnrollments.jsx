@@ -4,6 +4,7 @@ import { Line } from "rc-progress";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Footer from "@/components/student/Footer";
+import Loading from "@/components/student/Loading";
 export default function MyEnrollments() {
   const { enrolledCourses, calculateCourseTime,navigate,userData ,backendUrl,getToken,calculateNoOfLecture,fetchEnrolledCourses} = useContext(AppContext);
 
@@ -15,8 +16,8 @@ export default function MyEnrollments() {
       const tempProgressArray=await Promise.all(
         enrolledCourses.map(async (course)=>{
           const {data}=await axios.post(`${backendUrl}/api/user/get-course-progress`,{courseId: course?._id},{headers:{authorization:`Bearer ${token}`}})
-          let totalLectures=calculateNoOfLecture(course.courseContent);
-          const lecturesCompleted=data.progress ? data.progress.lectureCompleted.length:0;
+          let totalLectures=calculateNoOfLecture(course?.courseContent) || '0';
+          const lecturesCompleted=data?.progress ? data.progress?.lectureCompleted?.length:0;
           return {totalLectures,lecturesCompleted}
         })
       )
@@ -38,7 +39,7 @@ export default function MyEnrollments() {
     }
   },[enrolledCourses])
 
-  if (enrolledCourses.length === 0 || progressArray.length==0 ) {
+  if (enrolledCourses?.length === 0 || progressArray?.length==0 ) {
     return <p className="text-gray-500 text-center mt-10">No enrolled courses yet.</p>
   }
 
@@ -56,19 +57,19 @@ export default function MyEnrollments() {
           </tr>
         </thead>
         <tbody className="text-gray-700">
-          { enrolledCourses.map((course, i) => (
+          { enrolledCourses?.map((course, i) => (
             <tr key={i} className="border-b border-gray-300">
               <td className="flex space-x-3 px-2 md:px-4 md:py-3 py-2 items-center">
                 <img src={course.courseThumbnail} alt="thumbnail" className=" w-14 sm:w-24 md:w-28"/>
                 <div className="flex-1">
-                  <p className="max-sm:text-sm mb-1"> {course.courseTitle} </p>
-                  <Line strokeWidth={2} percent={progressArray[i].lecturesCompleted/progressArray[i].totalLectures*100 } className="bg-gray-300 rounded-full"/>
+                  <p className="max-sm:text-sm mb-1"> {course?.courseTitle || 'xyz'} </p>
+                  <Line strokeWidth={2} percent={progressArray[i]?.lecturesCompleted/progressArray[i]?.totalLectures*100 } className="bg-gray-300 rounded-full"/>
                 </div>
               </td>
               <td className="px-4 py-3 max-sm:hidden">{calculateCourseTime(course)}</td>
               <td>
                 <div className="px-4 py-3 max-sm:hidden">
-                  {progressArray[i] && `${progressArray[i].lecturesCompleted} / ${progressArray[i].totalLectures}`} <span>Lectures</span>
+                  {progressArray[i] && `${progressArray[i].lecturesCompleted || '0'} / ${progressArray[i].totalLectures || '0'}`} <span>Lectures</span>
                 </div>
               </td >
               <td className="px-4 py-3 max-sm:text-right">

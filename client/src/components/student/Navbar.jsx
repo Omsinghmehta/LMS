@@ -6,7 +6,7 @@ import { assets } from "@/assets2/assets";
 import { AppContext } from "@/context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+ 
  export default function Navbar() {
 
   const {navigate,isEducator,backendUrl,setIsEducator,getToken}=useContext(AppContext);
@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 
   const { openSignIn } = useClerk();
   const { user } = useUser();
+   
   const becomeEducator=async()=>{
     try {
       if(isEducator)

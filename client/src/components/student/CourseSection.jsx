@@ -2,11 +2,13 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import CourseCard from "./CourseCard";
+import Loading from "./Loading";
 
 export default function CourseSection() {
   const { allCourses } = useContext(AppContext);
   console.log(allCourses)
-
+  
+  if(!allCourses ||allCourses.length==0) return <Loading/>
 
   return (
     <div className="py-16 px-8 max-w-9xl  space-y-6 ">

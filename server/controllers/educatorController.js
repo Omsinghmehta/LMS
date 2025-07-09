@@ -6,7 +6,7 @@ import User from '../models/User.js';
 
 export const updateRoleToEducator = async (req, res) => {
     try {
-        const userId = await req.auth.userId;
+         const {userId} =await req.auth();
         await clerkClient.users.updateUserMetadata(userId, {
             publicMetadata: {
                 role: 'educator',
@@ -23,7 +23,8 @@ export const addCourse = async (req, res) => {
     try {
         const { courseData } = req.body;
         const imageFile = req.file;
-        const educatorId = await req.auth.userId;
+        const {userId} =await req.auth();
+        const educatorId =userId 
         if (!courseData || !imageFile) {
             return res.status(400).json({ success: false, message: 'Course data or image file missing' });
         }
@@ -46,7 +47,8 @@ export const addCourse = async (req, res) => {
 
 export const getEducatorCourses = async (req, res) => {
     try {
-        const educator = req.auth.userId;
+        const {userId} =await req.auth();
+        const educator=userId;
         const courses = await Course.find({ educator });
         res.json({ success: true, courses });
     } catch (error) {
@@ -56,7 +58,8 @@ export const getEducatorCourses = async (req, res) => {
 
 export const educatorDashboardData = async (req, res) => {
     try {
-        const educator = req.auth.userId;
+         const {userId} =await req.auth();
+        const educator = userId;
         const courses = await Course.find({ educator });
 
         const totalCourses = courses.length;
@@ -95,7 +98,8 @@ export const educatorDashboardData = async (req, res) => {
 
 export const getEnrolledStudentsData = async (req, res) => {
     try {
-        const educator = req.auth.userId;
+         const {userId} = await req.auth();
+        const educator=userId;
         const courses = await Course.find({ educator });
 
         const courseIds = courses.map((course) => course._id);

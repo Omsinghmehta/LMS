@@ -13,7 +13,7 @@ export default function DashBoard() {
    try {
       const token =await getToken();
       const {data}=await axios.get(`${backendUrl}/api/educator/dashboard`,{headers:{Authorization:`Bearer ${token}`}});
-console.log("Dashboard API response:", data);
+    console.log("Dashboard API response:", data);
 
     if (data.success) {
       setDashBoardData(data.dashboardData);
@@ -59,7 +59,7 @@ console.log("Dashboard API response:", data);
             <img src={assets.earning_icon} alt="" className="max-sm:w-10 max-sm:h-10"/>
           </div>
           <div className="text-black">
-            <h1 className="text-md md:text-2xl font-semibold">{currency}{dashBoardData?.totalEarnings}</h1>
+            <h1 className="text-md md:text-2xl font-semibold">{currency}{dashBoardData?.totalEarnings || "0.00"}</h1>
             <p className="text-sm md:text-md text-gray-500">Total Earnings</p>
           </div>
         </div>
@@ -85,15 +85,15 @@ console.log("Dashboard API response:", data);
             </thead>
             <tbody className="text-sm text-gray-500 text-left">
               {
-                dashBoardData.enrolledStudentData.map((item,idx)=>(
+                dashBoardData?.enrolledStudentData?.map((item,idx)=>(
                   <tr key={idx} className="border-b border-gray-500/20">
                     <td className="px-4 py-3 truncate font-semibold hidden sm:table-cell ">{idx+1}</td>
                     <td className="px-4 py-3 truncate space-x-3 flex items-center">
-                      <img src={item?.student?.imageUrl} 
+                      <img src={item?.student?.imageUrl || assets.profile_img3} 
                       className="w-9 h-9 rounded-full"loading="lazy"/>
-                      <span className="truncate">{item.student.name}</span>
+                      <span className="truncate">{item?.student?.name}</span>
                     </td>
-                    <td className="px-4 py-3 truncate">{item.courseTitle}</td>
+                    <td className="px-4 py-3 truncate">{item?.courseTitle}</td>
                   </tr>
                 
                 ))

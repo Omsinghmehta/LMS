@@ -52,10 +52,10 @@ export default function StudentsEntrolled() {
                             <td className="md:px-4 py-3 px-2 flex items-center  truncate space-x-3  ">
                               <img src={item.student.imageUrl} 
                               className="w-9 h-9 rounded-full "/>
-                              <span className="truncate ">{item.student.name}</span>
+                              <span className="truncate ">{item?.student?.name || 'xyz'}</span>
                             </td>
-                              <td className="px-4 py-3   truncate">{item.courseTitle}</td>
-                            <td className="px-4 py-3 hidden md:table-cell">{new Date(item.purchaseDate).toLocaleDateString()}</td>
+                              <td className="px-4 py-3   truncate">{item?.courseTitle || 'xyz'}</td>
+                            <td className="px-4 py-3 hidden md:table-cell">{new Date(item?.purchaseDate || '12/7/2025').toLocaleDateString()}</td>
                           </tr>
                         
                         ))

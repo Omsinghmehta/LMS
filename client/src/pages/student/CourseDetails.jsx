@@ -12,7 +12,6 @@ import YouTube from "react-youtube";
 export default function CourseDetails() {
   const { id } = useParams();
   const {
-    allCourses,
     courseRate,
     calculateCourseTime,
     calculateChapterTime,
@@ -26,7 +25,8 @@ export default function CourseDetails() {
   const [openSection, setOpenSection] = useState({});
   const [playedData, setPlayerData] = useState(null);
   const [isAlreaduEnrolled,setIsAlreaduEnrolled]=useState(0);
-
+  
+console.log(userData)
   const toggleSection = (index) => {
     setOpenSection((prev) => ({ ...prev, [index]: !prev[index] }));
   };
@@ -54,7 +54,7 @@ const enrollCourse=async (req,res)=>{
       return toast.warn('Already Enrolled');
     }
     const token=await getToken();
-    const {data}=await axios.post(`${backendUrl}/api/user/purchase`,{courseId:courseData._id},{headers:{Authorization:`Bearer ${token}`}})
+    const {data}=await axios.post(`${backendUrl}/api/user/purchase`,{courseId:courseData?._id},{headers:{Authorization:`Bearer ${token}`}})
     if(data.success){
       const {session_url}=data;
       window.location.replace(session_url);
@@ -74,7 +74,7 @@ const enrollCourse=async (req,res)=>{
 
    useEffect(() => {
     if(userData && courseData)
-    setIsAlreaduEnrolled(userData.enrolledCourses.includes(courseData._id));
+    setIsAlreaduEnrolled(userData.enrolledCourses.includes(courseData?._id));
   }, [userData,courseData]);
 
   if (!courseData)
@@ -89,7 +89,7 @@ const enrollCourse=async (req,res)=>{
       <div className=" min-h-screen  grid lg:grid-cols-2  grid-cols-1  lg:gap-10  bg-gradient-to-b from-cyan-200/45 to-white ">
         <div className=" h-full w-full md:px-35 px-10 md:pt-20 pt-10 order-2 md:order-1">
           <h1 className="text-4xl font-semibold text-gray-800 ">
-            {courseData.courseTitle}
+            {courseData?.courseTitle || "xyz"}
           </h1>
           <p
             className="pt-2 md:pt-5 max-w-xl text-gray-600"
@@ -99,13 +99,13 @@ const enrollCourse=async (req,res)=>{
           ></p>
 
           <div className="flex items-center space-x-2 text-sm pt-3 pb-1">
-            <p>{courseRate(courseData)}</p>
+            <p>{courseRate?.(courseData) || '0'}</p>
             <div className="flex ">
               {[...Array(5)].map((_, i) => (
                 <img
                   key={i}
                   src={
-                    i < Math.floor(courseRate(courseData))
+                    i < Math.floor(courseRate?.(courseData) || '0')
                       ? assets.star
                       : assets.star_blank
                   }
@@ -115,21 +115,21 @@ const enrollCourse=async (req,res)=>{
               ))}
             </div>
             <p className="text-blue-600">
-              ({courseData.courseRatings.length}{" "}
-              {courseData.courseRatings.length > 1 ? "ratings" : "rating"})
+              ({courseData?.courseRatings?.length || 0}
+              {courseData?.courseRatings?.length > 1 ? "ratings" : "rating"})
             </p>
             <p>
-              {courseData.enrolledStudents.length}{" "}
-              {courseData.enrolledStudents.length > 1 ? "students" : "student"}
+              {courseData?.enrolledStudents?.length || 0}
+              {courseData?.enrolledStudents?.length > 1 ? "students" : "student"}
             </p>
           </div>
           <p className="text-sm">
-            Course by <span className="text-blue-600 underline">{courseData.educator.name}</span>
+            Course by <span className="text-blue-600 underline">{courseData?.educator?.name || "xyz"}</span>
           </p>
           <div className="pt-8 text-gray-600">
             <h2 className="font-semibold text-xl">Course Structure</h2>
             <div className="mt-6 max-w-xl cursor-pointer text-xs lg:text-sm">
-              {courseData.courseContent.map((chapter, idx) => (
+              {courseData?.courseContent?.map((chapter, idx) => (
                 <div
                   key={idx}
                   className="flexbg-white border border-gray-300 mb-2 select-none overflow-hidden"
@@ -145,11 +145,11 @@ const enrollCourse=async (req,res)=>{
                           openSection[idx] ? "rotate-180" : ""
                         }`}
                       />
-                      <p className="font-medium "> {chapter.chapterTitle}</p>
+                      <p className="font-medium "> {chapter?.chapterTitle || "xyz"}</p>
                     </div>
                     <p>
-                      {chapter?.chapterContent?.length} lectures -{" "}
-                      {calculateChapterTime(chapter.chapterContent)}
+                      {chapter?.chapterContent?.length || 0} lectures -{" "}
+                      {calculateChapterTime?.(chapter?.chapterContent) || "0"}
                     </p>
                   </div>
 
@@ -159,21 +159,21 @@ const enrollCourse=async (req,res)=>{
                     }`}
                   >
                     <ul className="py-2">
-                      {chapter.chapterContent.map((lecture, i) => (
+                      {chapter?.chapterContent?.map((lecture, i) => (
                         <li
                           key={i}
                           className="flex  gap-2 pl-2 lg:pl-4 py-1 cursor-pointer"
                         >
                           <img src={assets.play_icon} />
                           <div className="flex justify-between w-full">
-                            <p>{lecture.lectureTitle}</p>
+                            <p>{lecture?.lectureTitle || "xyz"}</p>
                             <div className="flex gap-3">
-                              {lecture.isPreviewFree && (
+                              {lecture?.isPreviewFree && (
                                 <p
                                   className="text-blue-500"
                                   onClick={() =>
                                     setPlayerData({
-                                      videoId: lecture.lectureUrl
+                                      videoId: lecture?.lectureUrl
                                         .split("/")
                                         .pop(),
                                     })
@@ -184,7 +184,7 @@ const enrollCourse=async (req,res)=>{
                               )}
                               <p>
                                 {humanizeDuration(
-                                  lecture.lectureDuration * 60 * 1000,
+                                  lecture?.lectureDuration * 60 * 1000,
                                   { units: ["h", "m"] }
                                 )}
                               </p>
@@ -201,7 +201,7 @@ const enrollCourse=async (req,res)=>{
                 <p
                   className="rich-text pt-3"
                   dangerouslySetInnerHTML={{
-                    __html: courseData.courseDescription,
+                    __html: courseData?.courseDescription || "xyz",
                   }}
                 ></p>
               </div>
@@ -213,12 +213,12 @@ const enrollCourse=async (req,res)=>{
         <div className=" rounded xl:px-45 sm:px-18 px-10 md:pt-20 order-1 mt-10 md:mt-0 md:order-2 w-fit ">
           {playedData ? (
             <YouTube
-              videoId={playedData.videoId}
+              videoId={playedData?.videoId}
               opts={{ playerVars: { autoplay: 1 } }}
               iframeClassName="w-full aspect-video h-fit "
             />
           ) : (
-            <img src={courseData.courseThumbnail} />
+            <img src={courseData?.courseThumbnail || assets.course_1_thumbnail} />
           )}
           <div className=" bg-gray-50 rounded-b shadow-xl px-7 py-5">
             <div className="flex gap-2">
@@ -231,17 +231,17 @@ const enrollCourse=async (req,res)=>{
               <h1 className="font-semibold text-xl md:text-3xl text-gray-800">
                 {currency}
                 {(
-                  courseData.coursePrice -
-                  (courseData.discount * courseData.coursePrice) / 100
+                  courseData?.coursePrice || 0 -
+                  (courseData?.discount || 0 * courseData?.coursePrice || 0) / 100
                 ).toFixed(2)}
               </h1>
               <h1 className="font-medium line-through  text-xs md:text-base text-gray-600">
                 {currency}
-                {courseData.coursePrice}
+                {courseData?.coursePrice || 0}
               </h1>
               <h1 className="font-medium text-xs md:text-base  text-gray-600">
                 {currency}
-                {courseData.discount}% off
+                {courseData?.discount || 0}% off
               </h1>
             </div>
             <div className="flex items-center ">
@@ -250,7 +250,7 @@ const enrollCourse=async (req,res)=>{
                   className="h-3 w-auto md:h-auto md:w-auto"
                   src={assets.star}
                 />
-                <p className="text-xs md:text-base">{courseRate(courseData)}</p>
+                <p className="text-xs md:text-base">{courseRate?.(courseData) || "0"}</p>
               </div>
 
               <div className="text-gray-500 px-1 md:px-2">|</div>
@@ -261,7 +261,7 @@ const enrollCourse=async (req,res)=>{
                   src={assets.time_clock_icon}
                 />
                 <p className="text-xs md:text-base">
-                  {calculateCourseTime(courseData)}
+                  {calculateCourseTime?.(courseData) || "0"}
                 </p>
               </div>
 
@@ -273,7 +273,7 @@ const enrollCourse=async (req,res)=>{
                   className="h-3 w-auto md:h-auto md:w-auto"
                 />
                 <p className="text-xs md:text-base">
-                  {calculateNoOfLecture(courseData.courseContent)} lessons
+                  {calculateNoOfLecture(courseData?.courseContent || "xyz")} lessons
                 </p>
               </div>
             </div>
