@@ -157,6 +157,7 @@ useEffect(() => {
     setUserData,
     getToken,
     fetchAllCourse,
+    setIsEducator, 
   };
 
   return (
