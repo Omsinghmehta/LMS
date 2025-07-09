@@ -4,7 +4,6 @@ import { Line } from "rc-progress";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Footer from "@/components/student/Footer";
-import Loading from "@/components/student/Loading";
 export default function MyEnrollments() {
   const { enrolledCourses, calculateCourseTime,navigate,userData ,backendUrl,getToken,calculateNoOfLecture,fetchEnrolledCourses} = useContext(AppContext);
 

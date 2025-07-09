@@ -1,4 +1,4 @@
-import React, { act, useContext, useEffect, useRef, useState } from "react";
+import React, {  useContext, useEffect, useRef, useState } from "react";
 import Quill from "quill";
 import {nanoid} from "nanoid";
 import { assets } from "@/assets2/assets";
