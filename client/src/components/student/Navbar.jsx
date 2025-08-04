@@ -35,7 +35,7 @@ import { toast } from "react-toastify";
       }
     } catch (error) {
         toast.error(error.message)
-      
+
     }
   }
   return (
@@ -59,7 +59,7 @@ import { toast } from "react-toastify";
         ) : (
           <button
             onClick={() => openSignIn()}
-            className="text-white px-5 py-2 bg-white hover:bg-blue-600 cursor-pointer rounded-full"
+            className="text-white px-5 py-2 bg-blue-600 hover:bg-blue-500 cursor-pointer rounded-full"
           >
             Create Account
           </button>

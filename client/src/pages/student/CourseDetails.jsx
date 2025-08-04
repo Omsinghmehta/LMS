@@ -231,8 +231,8 @@ const enrollCourse=async (req,res)=>{
               <h1 className="font-semibold text-xl md:text-3xl text-gray-800">
                 {currency}
                 {(
-                  courseData?.coursePrice || 0 -
-                  (courseData?.discount || 0 * courseData?.coursePrice || 0) / 100
+                  (courseData?.coursePrice || 0) -
+                  (((courseData?.discount || 0) * (courseData?.coursePrice || 0)) / 100)
                 ).toFixed(2)}
               </h1>
               <h1 className="font-medium line-through  text-xs md:text-base text-gray-600">

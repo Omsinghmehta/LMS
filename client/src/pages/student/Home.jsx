@@ -9,7 +9,7 @@ import Footer from '@/components/student/Footer'
 
 export default function Home() {
   return (
-    <div className='bg-gradient-to-b from-cyan-200/45 via-cyan-100 to-white pt-[5rem] md:pt-[8rem] min-w-screen min-h-screen '>
+    <div className='bg-gradient-to-b from-cyan-200/45 via-cyan-50 to-white pt-[5rem] md:pt-[8rem] min-w-screen min-h-screen '>
       <Hero/>
       <SearchBar/>
       <Companies/>

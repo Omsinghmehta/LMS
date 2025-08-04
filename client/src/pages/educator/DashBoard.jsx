@@ -13,7 +13,7 @@ export default function DashBoard() {
    try {
       const token =await getToken();
       const {data}=await axios.get(`${backendUrl}/api/educator/dashboard`,{headers:{Authorization:`Bearer ${token}`}});
-    console.log("Dashboard API response:", data);
+    // console.log("Dashboard API response:", data);
 
     if (data.success) {
       setDashBoardData(data.dashboardData);
