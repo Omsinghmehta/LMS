@@ -9,7 +9,7 @@ export default function MyEnrollments() {
 
   const [progressArray,setProgressArray]=useState([])
 
-  const getCourseProgress=async ()=>{
+  const getCourseProgress=async ()=>{ 
     try {
       const token=await getToken();
       const tempProgressArray=await Promise.all(
@@ -31,6 +31,7 @@ export default function MyEnrollments() {
       fetchEnrolledCourses();
     }
   },[userData])
+
 
   useEffect(()=>{
     if(enrolledCourses.length>0){

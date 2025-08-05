@@ -40,13 +40,13 @@ const fetchUserData = async () => {
     });
     console.log("user",data)
 
-    if (data.success) {
-      setUserData(data.user);
-      if (data.user.role === "educator") {
+    if (data?.success) {
+      setUserData(data?.user);
+      if (data?.user?.role === "educator") {
         setIsEducator(1);
       }
     } else {
-      toast.error(data.message);
+      toast.error(data?.message);
     }
   } catch (error) {
     toast.error(error.message);

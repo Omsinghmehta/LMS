@@ -1,4 +1,5 @@
 import Course from "../models/Course.js";
+import Feedback from "../models/Feedback.js";
 
 export const getAllCourse = async (req, res) => {
     try {
@@ -29,5 +30,26 @@ export const getCourseId = async (req, res) => {
 
     } catch (error) {
         res.json({ success: false, message: error.message });
+    }
+}
+
+export const getAllComments=async(req,res)=>{
+    try {
+        const {courseId}=req.params;
+        const comments=await Feedback.find({courseId:courseId}).sort({createdAt:-1}).select("userName comment createdAt");
+        res.json({success: true,comments});
+    } catch (error) {
+        res.json({success: false,message:error.message})
+    }
+}
+
+export const isCompleted=async(req,res)=>{
+    try {
+        const {userId,courseId}=req.body;
+        const res=await CourseProgress.find({userId,courseId});
+        res.json({success:true,isCompleted:res.completed})
+    } catch (error) {
+        res.json({success: false,message:error.message})
+        
     }
 }

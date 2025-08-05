@@ -3,6 +3,7 @@ import User from "../models/User.js"
 import Course from "../models/Course.js";
 import Stripe from 'stripe'
 import { CourseProgress } from "../models/courseProgress.js";
+import Feedback from "../models/Feedback.js";
 
 export const getUserData = async (req, res) => {
   try {
@@ -50,7 +51,7 @@ export const purchaseCourse = async (req, res) => {
     }
 
     const discountedAmount = Number(
-      (courseData.coursePrice - (courseData.discount * courseData.coursePrice) / 100).toFixed(2)
+      (courseData.coursePrice - ((courseData.discount * courseData.coursePrice) / 100)).toFixed(2)
     );
 
     const newPurchase = await Purchase.create({
@@ -164,3 +165,37 @@ export const addUserRating = async (req, res) => {
 
   }
 }
+export const addComment = async (req, res) => {
+  try {
+    const { comment, courseId } = req.body;
+    const { userId } = await req.auth();
+
+    if (!comment || !courseId) {
+      return res.status(400).json({ success: false, message: 'Comment and courseId are required' });
+    }
+
+    const isPresent = await Feedback.findOne({ courseId, userId });
+    if (isPresent) {
+      return res.status(409).json({ success: false, message: "You have already commented on this course" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    const newComment = new Feedback({
+      courseId,
+      userId,
+      userName: user.name,
+      comment
+    });
+
+    await newComment.save();
+
+    return res.status(201).json({ success: true, message: "Comment submitted" });
+
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};

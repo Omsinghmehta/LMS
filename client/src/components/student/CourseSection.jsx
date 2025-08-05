@@ -6,7 +6,6 @@ import Loading from "./Loading";
 
 export default function CourseSection() {
   const { allCourses } = useContext(AppContext);
-  console.log(allCourses)
   
   if(!allCourses ||allCourses.length==0) return <Loading/>
 

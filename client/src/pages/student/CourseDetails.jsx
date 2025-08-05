@@ -1,7 +1,10 @@
 import { assets } from "@/assets2/assets";
+import CommentForm from "@/components/student/CommentForm";
+import CommentList from "@/components/student/CommentList";
 import Footer from "@/components/student/Footer";
 import Loading from "@/components/student/Loading";
 import { AppContext } from "@/context/AppContext";
+import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import humanizeDuration from "humanize-duration";
 import React, { useContext, useEffect, useState } from "react";
@@ -25,15 +28,26 @@ export default function CourseDetails() {
   const [openSection, setOpenSection] = useState({});
   const [playedData, setPlayerData] = useState(null);
   const [isAlreaduEnrolled,setIsAlreaduEnrolled]=useState(0);
-  
-console.log(userData)
+  const [isEnrolled, setIsEnrolled] = useState(null);
+ 
   const toggleSection = (index) => {
     setOpenSection((prev) => ({ ...prev, [index]: !prev[index] }));
   };
+
+  const myfun= (id)=>{
+    const res = userData.enrolledCourses.includes(id);
+  setIsEnrolled(res);
+  console.log(res);
+  }
+  
+  useEffect(()=>{
+    myfun(id);
+  },[userData])
+
   const fetchData = async() => {
     try {
       const {data}=await axios.get(`${backendUrl}/api/course/${id}`);
-
+      
       if(data.success){
         setCourseData(data.courseData);
       }else{
@@ -84,7 +98,7 @@ const enrollCourse=async (req,res)=>{
       </div>
     );
 
-  return (
+  return  (
     <div>
       <div className=" min-h-screen  grid lg:grid-cols-2  grid-cols-1  lg:gap-10  bg-gradient-to-b from-cyan-200/45 to-white ">
         <div className=" h-full w-full md:px-35 px-10 md:pt-20 pt-10 order-2 md:order-1">
@@ -205,6 +219,9 @@ const enrollCourse=async (req,res)=>{
                   }}
                 ></p>
               </div>
+            {console.log(isEnrolled)}
+              <CommentForm courseId={id} isEnrolled={isEnrolled}/>
+              <CommentList courseId={id}/>
             </div>
           </div>
         </div>
