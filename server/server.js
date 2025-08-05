@@ -17,7 +17,7 @@ await connectCloudinary();
 const _dirname=path.resolve();
 
 app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks);
-app.post('/clerk', express.json(),clerkWebHooks);
+app.post('/clerk', express.raw({ type: 'application/json' }), clerkWebHooks);
 
 app.use(cors());
 app.use(clerkMiddleware());
