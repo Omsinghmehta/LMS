@@ -11,7 +11,17 @@ export default function CoursesList() {
   const { input } = useParams();
   const [filterCards,setfilterCard]=useState([]);
 
-  
+   const mySort=(value)=>{
+      if(value=="asc")
+        {const sorted=[...filterCards].sort((a,b)=>a.coursePrice-b.coursePrice)
+        setfilterCard(sorted);}
+      else if(value=='dsc')
+        {const sorted=[...filterCards].sort((a,b)=>b.coursePrice-a.coursePrice);
+        setfilterCard(sorted);}
+      else
+        setfilterCard([...filterCards])
+    }
+
   useEffect(()=>{
     if( allCourses.length>0){
       input?setfilterCard(allCourses.filter((course)=>(course?.courseTitle?.toLowerCase().includes(input.toLowerCase())))):setfilterCard(allCourses)
@@ -37,14 +47,22 @@ export default function CoursesList() {
         </div>
       </div>
         
-        <div className=" px-10 md:px-30  mt-7  ">
-
+        <div className=" px-10 md:px-30  mt-7 ">
+       
         {
           input && <div className="w-fit px-2 md:px-4 rounded-full text-sm bg-gray-100 py-1 md:py-2 flex gap-2 md:gap-4 text-gray-800 border ">
             <p>{input}</p>
             <img src={assets.cross_icon} className="cursor-pointer" onClick={()=>navigate('/courses-list')}/>
           </div>
         }
+
+        <select className=" border p-2 focus:outline-none mt-2" defaultValue=''onChange={(e)=>mySort(e.target.value)}> 
+         <option disabled value="">
+            Sort By Price:
+          </option>
+          <option value='asc'>Low to High</option>
+          <option value='dsc'>High to Low</option>
+        </select>
 
         </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3  px-10 md:px-30  mt-16">

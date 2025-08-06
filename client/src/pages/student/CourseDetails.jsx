@@ -130,11 +130,11 @@ const enrollCourse=async (req,res)=>{
             </div>
             <p className="text-blue-600">
               ({courseData?.courseRatings?.length || 0}
-              {courseData?.courseRatings?.length > 1 ? "ratings" : "rating"})
+              {courseData?.courseRatings?.length > 1 ? " ratings" : " rating"})
             </p>
             <p>
               {courseData?.enrolledStudents?.length || 0}
-              {courseData?.enrolledStudents?.length > 1 ? "students" : "student"}
+              {courseData?.enrolledStudents?.length > 1 ? " students" : " student"}
             </p>
           </div>
           <p className="text-sm">
@@ -219,7 +219,6 @@ const enrollCourse=async (req,res)=>{
                   }}
                 ></p>
               </div>
-            {console.log(isEnrolled)}
               <CommentForm courseId={id} isEnrolled={isEnrolled}/>
               <CommentList courseId={id}/>
             </div>
