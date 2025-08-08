@@ -30,7 +30,7 @@ export default function CourseSection() {
         <Link
           to={"/courses-list"}
           onClick={() => scrollTo(0, 0)}
-          className=" mt-20 item-center rounded mx-auto  text-sm text-gray-500 border-gray-500/30 px-5 py-2 md:py-3 md:px-10 border "
+          className=" mt-20 item-center rounded mx-auto  text-sm text-gray-900  border-gray-900/30 px-5 py-2 md:py-3 md:px-10 border "
         >
           Show all courses
         </Link>

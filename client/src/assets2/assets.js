@@ -1,4 +1,6 @@
 import logo from './logo.svg'
+import director from './director.jpeg'
+import instructor from './instructor.avif'
 import learnify  from "./learnify.png";
 import logo_dark from './logo_dark.svg'
 import search_icon from './search_icon.svg'
@@ -47,6 +49,8 @@ import lesson_icon from './lesson_icon.svg'
 
 export const assets = {
     logo,
+    instructor,
+    director,
     learnify,
     search_icon,
     sketch,

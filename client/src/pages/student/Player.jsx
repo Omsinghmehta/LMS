@@ -1,4 +1,5 @@
 import { assets } from "@/assets2/assets";
+import Certificate from "@/components/student/Certificate";
 import Footer from "@/components/student/Footer";
 import Loading from "@/components/student/Loading";
 import Rating from "@/components/student/Rating";
@@ -11,13 +12,37 @@ import { toast } from "react-toastify";
 import YouTube from "react-youtube";
 
 export default function Player() {
-  const { enrolledCourses, calculateChapterTime ,fetchEnrolledCourses,backendUrl,userData,getToken} = useContext(AppContext);
+  const { enrolledCourses, calculateChapterTime ,calculateNoOfLecture,fetchEnrolledCourses,backendUrl,userData,getToken} = useContext(AppContext);
   const { courseId } = useParams();
   const [courseData, setCourseData] = useState(null);
   const [openSection, setOpenSection] = useState({});
   const [playerData,setPlayerData]=useState(null);
   const [progressData,setProgressData]=useState(null);
   const [initialRating,setInitialRating]=useState(null);
+  const [complete,setComplete]=useState(0);
+
+  const date=Date.now();
+  function formatDate(date) {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+}
+
+useEffect(()=>{
+  const isCompleted =async (courseId)=>{
+            const token=await getToken();
+  
+            const {data}=await axios.post(`${backendUrl}/api/user/get-course-progress`,{courseId: courseId},{headers:{authorization:`Bearer ${token}`}})
+            let totalLectures=calculateNoOfLecture(courseData.courseContent) || 0;
+            const lecturesCompleted=data?.progress ? data.progress?.lectureCompleted?.length:0;
+             (lecturesCompleted===totalLectures)?setComplete(1):setComplete(0);
+    }
+isCompleted(courseId);
+},[courseData,courseId]);
+
+const myDate=formatDate(new Date(date)); 
 
 
   const getCourseData = () => {
@@ -170,7 +195,12 @@ useEffect(()=>{
         <h1 className="text-sm md:text-xl font-semibold py-2 md:py-5 ">Rate this course : </h1>
         <Rating initialRating={initialRating} onRate={handleRate}/>
       </div>
-      </div>
+  
+      
+      {     
+        (complete ===1)? <Certificate username={userData.name} courseName={courseData.courseTitle} completionDate={myDate} />:""
+      }    
+  </div>
 
       {/* right */}
       <div className="md:mt-15 mt-10">

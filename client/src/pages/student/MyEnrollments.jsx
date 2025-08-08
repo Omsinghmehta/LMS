@@ -13,7 +13,7 @@ export default function MyEnrollments() {
     try {
       const token=await getToken();
       const tempProgressArray=await Promise.all(
-        enrolledCourses.map(async (course)=>{
+        enrolledCourses.map(async (course)=>{ 
           const {data}=await axios.post(`${backendUrl}/api/user/get-course-progress`,{courseId: course?._id},{headers:{authorization:`Bearer ${token}`}})
           let totalLectures=calculateNoOfLecture(course?.courseContent) || '0';
           const lecturesCompleted=data?.progress ? data.progress?.lectureCompleted?.length:0;

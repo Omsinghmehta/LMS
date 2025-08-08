@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { UserCircle } from "lucide-react";
 import { useUser, useClerk, UserButton } from "@clerk/clerk-react";
 import { assets } from "@/assets2/assets";
 import { AppContext } from "@/context/AppContext";

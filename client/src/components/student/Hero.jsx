@@ -10,10 +10,9 @@ export default function Hero() {
           <Typewriter
             words={[
               "Hands-On Projects",
-              "Expert Mentorship",
+              "Experts Courses",
               "Job-Ready Skills",
               "Interview Preparation",
-              "Real-World Experience",
             ]}
             loop={true}
             cursor

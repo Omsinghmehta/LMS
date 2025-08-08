@@ -22,6 +22,8 @@ export default function CommentForm({courseId , isEnrolled}) {
     }
     finally{
     setComment("");
+
+
   }
 }
 
