@@ -4,16 +4,18 @@ import Loading from "@/components/student/Loading";
 import { AppContext } from "@/context/AppContext";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function DashBoard() {
   const { currency ,getToken,isEducator,backendUrl} = useContext(AppContext);
   const [dashBoardData, setDashBoardData] = useState(null);
+  const navigate=useNavigate();
 
   const fetchDashboardData = async () => {
    try {
       const token =await getToken();
       const {data}=await axios.get(`${backendUrl}/api/educator/dashboard`,{headers:{Authorization:`Bearer ${token}`}});
-    // console.log("Dashboard API response:", data);
+    console.log("Dashboard API response:", data);
 
     if (data.success) {
       setDashBoardData(data.dashboardData);
@@ -79,6 +81,7 @@ export default function DashBoard() {
             <th className="px-4 py-3 font-semibold hidden sm:table-cell"> #</th>
             <th className="px-4 py-3 font-semibold">Student Name</th>
             <th className="px-4 py-3 font-semibold">Course Title</th>
+            <th className="px-4 py-3 font-semibold">Chat Now</th>
 
             </tr>
 
@@ -93,7 +96,10 @@ export default function DashBoard() {
                       className="w-9 h-9 rounded-full"loading="lazy"/>
                       <span className="truncate">{item?.student?.name}</span>
                     </td>
+                    {console.log(item)}
                     <td className="px-4 py-3 truncate">{item?.courseTitle}</td>
+                    <td className=" text-xs md:text-md md:px-4 md:py-3 truncate"><button onClick={()=>navigate(`chat-with-student/${item?.id}/${item?.instructor}`)} className="bg-gray-800 text-white px-4 py-2 rounded ">Connect</button></td>
+
                   </tr>
                 
                 ))

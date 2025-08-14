@@ -7,9 +7,10 @@ import { AppContext } from "@/context/AppContext";
 import axios from "axios";
 import humanizeDuration from "humanize-duration";
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import YouTube from "react-youtube";
+import Chatting from "./Chatting";
 
 export default function Player() {
   const { enrolledCourses, calculateChapterTime ,calculateNoOfLecture,fetchEnrolledCourses,backendUrl,userData,getToken} = useContext(AppContext);
@@ -20,7 +21,9 @@ export default function Player() {
   const [progressData,setProgressData]=useState(null);
   const [initialRating,setInitialRating]=useState(null);
   const [complete,setComplete]=useState(0);
-
+  const [showChat, setShowChat] = useState(false);
+  
+  let token;
   const date=Date.now();
   function formatDate(date) {
   return date.toLocaleDateString("en-US", {
@@ -32,12 +35,12 @@ export default function Player() {
 
 useEffect(()=>{
   const isCompleted =async (courseId)=>{
-            const token=await getToken();
-  
-            const {data}=await axios.post(`${backendUrl}/api/user/get-course-progress`,{courseId: courseId},{headers:{authorization:`Bearer ${token}`}})
-            let totalLectures=calculateNoOfLecture(courseData.courseContent) || 0;
-            const lecturesCompleted=data?.progress ? data.progress?.lectureCompleted?.length:0;
-             (lecturesCompleted===totalLectures)?setComplete(1):setComplete(0);
+    token=await getToken();
+
+    const {data}=await axios.post(`${backendUrl}/api/user/get-course-progress`,{courseId: courseId},{headers:{authorization:`Bearer ${token}`}})
+    let totalLectures=calculateNoOfLecture(courseData?.courseContent) || 0;
+    const lecturesCompleted=data?.progress ? data.progress?.lectureCompleted?.length:0;
+      (lecturesCompleted===totalLectures)?setComplete(1):setComplete(0);
     }
 isCompleted(courseId);
 },[courseData,courseId]);
@@ -198,8 +201,27 @@ useEffect(()=>{
   
       
       {     
-        (complete ===1)? <Certificate username={userData.name} courseName={courseData.courseTitle} completionDate={myDate} />:""
+        (complete ===1)? <Certificate username={userData.name} courseName={courseData?.courseTitle} completionDate={myDate} />:""
       }    
+
+ 
+      
+        
+      <div>
+        <p className="text-sm md:text-xl font-semibold text-blue-900">Course Chat Room : </p>
+        <button className="p-1 md:px-3 md:py-2 my-4 bg-black text-white rounded text-sm md:text-base hover:bg-gray-700" onClick={()=>setShowChat(true)}>Connect</button>
+
+        {
+        
+        showChat && (
+        <Chatting
+          senderId='Student'
+          courseId={courseId}
+          instructorId={courseData.educator} // or courseData.instructorId
+        />
+      )}
+      </div>
+      
   </div>
 
       {/* right */}

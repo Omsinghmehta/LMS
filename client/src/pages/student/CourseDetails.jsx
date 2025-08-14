@@ -305,7 +305,7 @@ const enrollCourse=async (req,res)=>{
               <ul className="list-disc text-gray-500 text-sm md:text-base ml-4 pt-2">
                 <li>Lifetime access with free updates.</li>
                 <li> Step-by-Step, hand-on project guidance.</li>
-                <li>Downloadable resource and source code.</li>
+                <li> Chat room for asking doubt with peers and educator.</li>
                 <li>Quizzes to test your knowledge.</li>
                 <li>Certificate of completion.</li>
               </ul>

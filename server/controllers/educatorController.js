@@ -69,7 +69,7 @@ export const educatorDashboardData = async (req, res) => {
             courseId: { $in: courseIds },
             status: 'completed'
         });
-
+// console.log(purchases)
         const totalEarnings = purchases.reduce((sum, purchase) => sum + purchase.amount, 0);
         const enrolledStudentData = [];
 
@@ -81,7 +81,9 @@ export const educatorDashboardData = async (req, res) => {
             students.forEach(student => {
                 enrolledStudentData.push({
                     courseTitle: course.courseTitle,
-                    student
+                    student,
+                    id:course._id,
+                    instructor:course.educator
                 });
             });
         }
