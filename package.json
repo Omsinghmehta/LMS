@@ -2,16 +2,16 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
-    "server":"nodemon server/server.js",
-    "build":"npm install && npm install --prefix client && npm run build --prefix client",
-    "start":"node server/server.js"
+    "server": "nodemon server/server.js",
+    "build": "npm install && npm install --prefix client && npm run build --prefix client",
+    "start": "node server/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-   "description": "",
+  "description": "",
   "dependencies": {
     "@clerk/express": "^1.7.3",
     "cloudinary": "^2.7.0",
@@ -21,6 +21,7 @@
     "mongoose": "^8.16.1",
     "multer": "^2.0.1",
     "nodemon": "^3.1.10",
+    "socket.io": "^4.8.1",
     "stripe": "^18.2.1",
     "svix": "^1.42.0"
   }
