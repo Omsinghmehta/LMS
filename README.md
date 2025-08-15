@@ -1,3 +1,10 @@
+# 🎓 Learnify LMS – Full-Stack Learning Management System
+
+A complete Learning Management System (LMS) built with the MERN stack, designed for seamless course creation, enrollment, and learning. It includes user-friendly UI, role-based access, and essential features for both instructors and students.
+
+Live Website: https://lms-kzjr.onrender.com/
+
+
 # 📖 About the Project
 
 Learnify LMS is a modern web application where:
