@@ -182,6 +182,8 @@ const enrollCourse=async (req,res)=>{
                           <div className="flex justify-between w-full">
                             <p>{lecture?.lectureTitle || "xyz"}</p>
                             <div className="flex gap-3">
+                           {   console.log(lecture?.lectureUrl)}
+                              
                               {lecture?.isPreviewFree && (
                                 <p
                                   className="text-blue-500"
@@ -189,7 +191,7 @@ const enrollCourse=async (req,res)=>{
                                     setPlayerData({
                                       videoId: lecture?.lectureUrl
                                         .split("/")
-                                        .pop(),
+                                        .pop()
                                     })
                                   }
                                 >
@@ -225,7 +227,7 @@ const enrollCourse=async (req,res)=>{
           </div>
         </div>
 
-        {/* right side */}
+        {/* right side */  }
         <div className=" rounded xl:px-45 sm:px-18 px-10 md:pt-20 order-1 mt-10 md:mt-0 md:order-2 w-fit ">
           {playedData ? (
             <YouTube
