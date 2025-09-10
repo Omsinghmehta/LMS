@@ -10,9 +10,9 @@ Live Website: https://lms-kzjr.onrender.com/
 Learnify LMS is a modern web application where:
 
 
-1. Instructors create, update, and manage their own courses.
+1. Instructors create, update, and manage their own courses and chat with students.
 
-2. Students browse, preview, enroll, and learn from interactive lessons.
+2. Students browse, preview, enroll, and learn from interactive lessons and chat with educator & peers.
 
 It supports videos, comments, and certificates — everything needed for online learning.
 
@@ -31,7 +31,7 @@ It supports videos, comments, and certificates — everything needed for online 
 
 * Comment System: Students can give one feedback.
 
-* Mini Chat Room : Students can ask questions.
+* Mini Chat Room : Students can ask questions and chat with peers and educator.
 
 * Certificate Generator with  signatures, logos, borders, and seals
 
@@ -107,5 +107,5 @@ It supports videos, comments, and certificates — everything needed for online 
 # 🚀 Future Improvements
 
 - Add quizzes and assignments.
-- Real-time chat between students & instructors.
+- In app notification of unread messages.
 
