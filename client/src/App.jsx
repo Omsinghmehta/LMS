@@ -15,6 +15,7 @@ import Navbar from "./components/student/Navbar";
 import "quill/dist/quill.snow.css";
 import { ToastContainer } from "react-toastify";
 import ChatWithStudent from "./pages/educator/ChatWithStudent";
+import AiCourseSearch from "./pages/student/AiCourseSearch";
  
 
 export default function App() {
@@ -26,12 +27,14 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/aisearch" element={<AiCourseSearch />} />
         <Route path="/courses-list"  element={<CoursesList />} />
         <Route path="/course/:id" element={<CourseDetails />} />
         <Route path="/course-list/:input" element={<CoursesList />} />
         <Route path="/my-enrollments" element={<MyEnrollments />} />
         <Route path="/player/:courseId" element={<Player />} />
         <Route path="/loading/:path" element={<Loading />} />
+
 
         {/* educator */}
         <Route path="/educator" element={<Educator />}>

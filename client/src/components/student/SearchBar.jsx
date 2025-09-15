@@ -33,6 +33,11 @@ export default function SearchBar({ data }) {
           </button>
         </div>
       </form>
+
+
+
+
+      
     </div>
   );
 }

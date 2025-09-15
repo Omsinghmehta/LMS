@@ -50,6 +50,10 @@ import { toast } from "react-toastify";
             <>
               <button className="text-gray-500" onClick={becomeEducator}>{isEducator?'Educator Dashboard':'Become Educator'}</button>|
               <Link to={"/my-enrollments"}> My Enrollments</Link>
+                    <button onClick={()=>navigate('/aisearch')}
+                    className="relative  text-center inline-flex items-center justify-center px-4 py-2 overflow-hidden font-medium text-white rounded-full shadow-lg transition-all duration-300 bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 hover:scale-105 hover:shadow-2xl">
+                    AI Search
+                  </button>
             </>
           )}
         </div>

@@ -4,12 +4,65 @@ import Course from "../models/Course.js";
 import Stripe from 'stripe'
 import { CourseProgress } from "../models/courseProgress.js";
 import Feedback from "../models/Feedback.js";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+function cleanResponse(text) {
+
+  return text.replace(/```json|```/g, "").trim();
+}
+
+function extractJSON(text) {
+
+  const match = text.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
+  return match ? match[0] : null;
+}
+
+export const aiSearch = async (req, res) => {
+  try {
+    const { query } = req.body;
+
+    const courses = await Course.find({ isPublished: true })
+      .select(["-courseContent", "-enrolledStudents"])
+      .populate({ path: "educator" });
+
+    const prompt = `
+      You are an AI that recommends courses. 
+      User query: "${query}"
+      Courses: ${JSON.stringify(courses)}
+      Return the best matching courses (max 3 & min 1).
+      Only return JSON array of matching course objects, no explanation, no markdown.
+    `;
+
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    const result = await model.generateContent(prompt);
+
+    const raw = result.response.candidates[0].content.parts[0].text;
+
+    const cleaned = cleanResponse(raw);
+
+    const jsonStr = extractJSON(cleaned);
+
+    if (!jsonStr) {
+      throw new Error("No valid JSON found in AI response");
+    }
+
+    const parsed = JSON.parse(jsonStr);
+
+    res.json({ success: true, courses: parsed });
+  } catch (err) {
+    console.error("AI Search Error:", err.message);
+    res.status(500).json({ success: false, error: "AI search failed" });
+  }
+};
+
 
 export const getUserData = async (req, res) => {
   try {
     const { userId } = await req.auth();
     console.log(userId)
-    
+
     const user = await User.findById(userId);
     if (!user) {
       return res.json({ success: false, message: 'user not found' });
@@ -96,7 +149,7 @@ export const purchaseCourse = async (req, res) => {
 
 export const updateUserCourseProgress = async (req, res) => {
   try {
-    const { userId } =await req.auth();
+    const { userId } = await req.auth();
     const { courseId, lectureId } = req.body;
     const progress = await CourseProgress.findOne({ courseId, userId });
     if (progress) {
@@ -134,7 +187,7 @@ export const getUserProgressData = async (req, res) => {
 
 export const addUserRating = async (req, res) => {
   try {
-    const { userId } =await req.auth();
+    const { userId } = await req.auth();
     const { courseId, rating } = req.body;
 
     if (!courseId || !userId || !rating || rating < 1 || rating > 5) {
@@ -199,3 +252,4 @@ export const addComment = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+

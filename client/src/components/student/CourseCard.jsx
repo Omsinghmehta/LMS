@@ -6,7 +6,7 @@ import Loading from "./Loading";
 export default function CourseCard({ course }) {
   const { currency, courseRate, navigate } = useContext(AppContext);
 
-  // ⚠️ Prevent rendering if course data is invalid
+
   if (!course || !course._id || !course.coursePrice) return <Loading/>;
 
   const discountedPrice = (
