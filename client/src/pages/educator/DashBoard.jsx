@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { assets, dummyDashboardData } from "@/assets2/assets";
+import { assets } from "@/assets2/assets";
 import Loading from "@/components/student/Loading";
 import { AppContext } from "@/context/AppContext";
 import { toast } from "react-toastify";

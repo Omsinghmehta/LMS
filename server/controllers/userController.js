@@ -6,20 +6,15 @@ import { CourseProgress } from "../models/courseProgress.js";
 import Feedback from "../models/Feedback.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-function cleanResponse(text) {
-
-  return text.replace(/```json|```/g, "").trim();
-}
-
-function extractJSON(text) {
-
-  const match = text.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
-  return match ? match[0] : null;
-}
-
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" },{apiVersion: 'v1beta'});
 export const aiSearch = async (req, res) => {
   try {
     const { query } = req.body;
+
+    if (!query) {
+      return res.status(400).json({ message: "Query is required" });
+    }
 
     const courses = await Course.find({ isPublished: true })
       .select(["-courseContent", "-enrolledStudents"])
@@ -33,30 +28,40 @@ export const aiSearch = async (req, res) => {
       Only return JSON array of matching course objects, no explanation, no markdown.
     `;
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const result = await model.generateContent(prompt);
+    console.log('Gemini result:', result);
+    
+    const responseText = result.response.text();
+    // console.log('Response text:', responseText);
 
-    const raw = result.response.candidates[0].content.parts[0].text;
+    const cleanText = responseText.replace(/```json|```/g, "").trim();
 
-    const cleaned = cleanResponse(raw);
-
-    const jsonStr = extractJSON(cleaned);
-
-    if (!jsonStr) {
-      throw new Error("No valid JSON found in AI response");
+    let recommended = [];
+    try {
+      recommended = JSON.parse(cleanText);
+    } catch (err) {
+      console.error("JSON parse error:", err);
+      return res.status(500).json({
+        message: "AI response not in expected format",
+        raw: responseText
+      });
     }
 
-    const parsed = JSON.parse(jsonStr);
+    return res.status(200).json({
+      query,
+      courses: recommended,
+    });
 
-    res.json({ success: true, courses: parsed });
-  } catch (err) {
-    console.error("AI Search Error:", err.message);
-    res.status(500).json({ success: false, error: "AI search failed" });
+  } catch (error) {
+    console.error("Error generating recommendations:", error);
+    console.error("Error details:", error.message);
+    res.status(500).json({ 
+      message: "Something went wrong", 
+      error: error.message 
+    });
   }
 };
-
 
 export const getUserData = async (req, res) => {
   try {

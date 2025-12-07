@@ -13,6 +13,7 @@
     "@clerk/clerk-react": "^5.31.9",
     "@tailwindcss/vite": "^4.1.8",
     "axios": "^1.10.0",
+    "caniuse-lite": "^1.0.30001757",
     "html2canvas": "^1.4.1",
     "humanize-duration": "^3.32.2",
     "jspdf": "^3.0.1",

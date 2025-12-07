@@ -6,7 +6,7 @@ import axios from 'axios';
 
 export default function StudentsEntrolled() {
   const [enrolledStudentData,setEnrolledStudentData]=useState(null);
-    const { getToken,isEducator,backendUrl } = useContext(AppContext);
+  const { getToken,isEducator,backendUrl } = useContext(AppContext);
   
 
   const fetchData=async()=>{

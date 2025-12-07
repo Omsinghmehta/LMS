@@ -43,7 +43,7 @@ export default function AddCourse() {
       }
       else if(action==='remove')
       {
-            setChapters(chapters.filter((chapter)=>chapterId!==chapterId));
+            setChapters(chapters.filter((chapter)=>chapter.chapterId!==chapterId));
       }
 
       else if(action==='toggle')
