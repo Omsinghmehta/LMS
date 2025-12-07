@@ -20,11 +20,14 @@ export default function CourseSection() {
         results.
       </p>
 
-      <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto items-center ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto items-center">
         {allCourses.length > 0 &&
-          allCourses
-            .slice(0, 4)
-            .map((course, idx) => <CourseCard key={idx} course={course} />)}
+          [...allCourses]
+            .sort(() => Math.random() - 0.5) 
+            .slice(0, 4)                     
+            .map((course, idx) => (
+              <CourseCard key={idx} course={course} />
+            ))}
       </div>
       <div className=" text-center p-5">
         <Link
